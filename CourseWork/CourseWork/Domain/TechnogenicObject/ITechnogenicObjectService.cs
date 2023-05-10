@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,9 +8,11 @@ using System.Windows.Forms;
 
 namespace CourseWork.Domain.TechnogenicObject
 {
-    internal interface ITechnogenicObjectService
+    public interface ITechnogenicObjectService
     {
         void FillDataGridTable(DataGridView dataGridTable);
-        void DeleteEpoches(List<int> selectedRowsIndexes);
+        void AddEpoch(DataGridView dataGridTable);
+        void DeleteEpoches(DataGridView dataGridTable, List<int> selectedRowsIndexes);
+        DataTable GetDataTable();
     }
 }

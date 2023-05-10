@@ -1,4 +1,6 @@
-﻿using CourseWork.Handlers.Application.ToolStrip.Project;
+﻿using CourseWork.Domain.TechnogenicObject;
+using CourseWork.Domain.TechnogenicObject.Impl;
+using CourseWork.Handlers.Application.ToolStrip.Project;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +19,12 @@ namespace CourseWork
         {
             // initialize handlers for forms
             ProjectToolHandler projectToolHandler = new ProjectToolHandler();
-            
+
+            IDecompositionService decompositionService = new DecompositionService();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ApplicationForm(projectToolHandler));
+            Application.Run(new ApplicationForm(projectToolHandler, decompositionService));
         }
     }
 }

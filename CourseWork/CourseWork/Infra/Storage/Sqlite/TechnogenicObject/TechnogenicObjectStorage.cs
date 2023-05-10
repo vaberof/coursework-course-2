@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CourseWork.Domain.TechnogenicObject;
 using System.Runtime.InteropServices;
+using System.Windows.Documents;
 
 namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
 {
@@ -22,64 +23,125 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
             this.db = db;
         }
 
-        public void FillDataGridTable(DataGridView dataGridTable)
+        public void OpenConnection()
+        {
+            db.Connection.Open();
+        }
+
+        public void CloseConnection()
+        {
+            db.Connection.Close();
+        }
+
+        public void CreateEpochCountColumn()
+        {
+            using (var command = new SQLiteCommand("PRAGMA table_info(Данные)", db.Connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.GetString(1) == "Количество_эпох")
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+            
+            using (var command = new SQLiteCommand("ALTER TABLE Данные ADD COLUMN Количество_эпох INTEGER;", db.Connection))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdateEpochCount(int epochCount)
+        {
+            using (var command = new SQLiteCommand("UPDATE Данные SET Количество_эпох = @epochCount", db.Connection))
+            {
+                command.Parameters.AddWithValue("@epochCount", epochCount);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public int GetEpochCount()
+        {
+            int epochCount = 0;
+            
+            using (var command = new SQLiteCommand("SELECT Количество_эпох FROM Данные", db.Connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        epochCount = Convert.ToInt32(reader["Количество_эпох"]);
+                    }
+                }
+            }            
+
+            return epochCount;
+        }
+
+        public void FillDataTable(DataTable dataTable)
         {
             string query = "SELECT * FROM [" + getTableName() + "]";
 
-            db.Table.Rows.Clear();
-            db.Table.Columns.Clear();
+            dataTable.Rows.Clear();
+            dataTable.Columns.Clear();
 
             SQLiteCommand command = new SQLiteCommand(db.Connection);
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, db.Connection);
 
-            adapter.Fill(db.Table);
+            adapter.Fill(dataTable);
 
-            for (int i = 1; i < db.Table.Columns.Count; i++)
+            // TODO: count - 1 потому что послендяя колонка "количество эпох"
+            for (int i = 1; i < dataTable.Columns.Count - 1; i++)
             {
                 string replaceCommosToDots = "UPDATE [" + getTableName() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";
                 command.CommandText = replaceCommosToDots;
                 command.ExecuteNonQuery();
-                Thread.Sleep(10);
+                //Thread.Sleep(10);
             }
 
-            db.Table.Rows.Clear();
-            db.Table.Columns.Clear();
+            dataTable.Rows.Clear();
+            dataTable.Columns.Clear();
 
             adapter = new SQLiteDataAdapter(query, db.Connection);
-            adapter.Fill(db.Table);
-
-            dataGridTable.Columns.Clear();
-            dataGridTable.Rows.Clear();
-
-            for (int column = 0; column < db.Table.Columns.Count; column++)
-            {
-                string columnName = db.Table.Columns[column].ColumnName;
-
-                dataGridTable.Columns.Add(columnName, columnName);
-                dataGridTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            }
-
-            for (int row = 0; row < db.Table.Rows.Count; row++)
-            {
-                dataGridTable.Rows.Add(db.Table.Rows[row].ItemArray);
-            }
+            adapter.Fill(dataTable);            
         }
 
-        public void DeleteRowFromTable(List<int> selectedRowsIndexes)
+        public void AddRow(double value)
         {
-            string convertedIndexes = "";
+            string SQLQuery = "INSERT INTO [" + getTableName() + "] (Эпоха) VALUES (\"" + value + "\")";
+            SQLiteCommand command = new SQLiteCommand(db.Connection);
+            command.CommandText = SQLQuery;
+            command.ExecuteNonQuery();
+        }
 
-            for (int i = 0; i < selectedRowsIndexes.Count; i++)
+        public void AddValuesInRow(int column, int row, double value)
+        {            
+            string convertedValue = value.ToString().Replace(',', '.');
+
+            string SQLQuery = "UPDATE [" + getTableName() + "] SET \"" + column + "\" = \"" + convertedValue + "\" WHERE Эпоха = \'" + row + "\'";
+            SQLiteCommand command = new SQLiteCommand(db.Connection);
+            command.CommandText = SQLQuery;
+            command.ExecuteNonQuery();
+        }
+
+        public void DeleteRowFromTable(List<int> epoches)
+        {
+            string convertedEpoches = "";
+
+            for (int i = 0; i < epoches.Count; i++)
             {                
-                convertedIndexes += selectedRowsIndexes[i].ToString();
-                if (i < selectedRowsIndexes.Count - 1)
+                convertedEpoches += epoches[i].ToString();
+                if (i < epoches.Count - 1)
                 {
-                    convertedIndexes += ",";
+                    convertedEpoches += ",";
                 }
             }
             
-            string SQLQuery = "DELETE FROM [" + getTableName() + "] WHERE Эпоха IN " + "(" + convertedIndexes + ")";
+            string SQLQuery = "DELETE FROM [" + getTableName() + "] WHERE Эпоха IN " + "(" + convertedEpoches + ")";
             SQLiteCommand command = new SQLiteCommand(db.Connection);
             command.CommandText = SQLQuery;
             command.ExecuteNonQuery();
@@ -91,14 +153,14 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
 
             SQLiteCommand command = new SQLiteCommand(query, db.Connection);
             SQLiteDataReader reader = command.ExecuteReader();
-            string columnNames = "";
+            string tableName = "";
 
             while (reader.Read())
             {
-                columnNames = reader.GetString(0);
+                tableName = reader.GetString(0);
             }
 
-            return columnNames;
+            return tableName;
         }
     }    
 }
