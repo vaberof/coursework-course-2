@@ -2,17 +2,14 @@
 using CourseWork.Handlers.Application.ToolStrip.Project;
 using CourseWork.Infra.Storage.Sqlite;
 using CourseWork.Infra.Storage.Sqlite.TechnogenicObject;
+using CourseWork.Service.Chart.FirstLevel;
+using CourseWork.Service.Chart.Impl;
 using CourseWork.View.Forms.Application;
 using CourseWork.View.Forms.Decomposition;
+using CourseWork.View.Forms.Decomposition.FourthLevel;
+using CourseWork.View.Forms.Decomposition.SecondLevel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace CourseWork
@@ -33,13 +30,18 @@ namespace CourseWork
 
         // domain service
         private ITechnogenicObjectService technogenicObjectService;
-        private IDecompositionService decompositionService;
+
+        // application service
+        DecompositionService decompositionService;
+        ChartService chartService;
+
         private int epochCount;
 
-        public ApplicationForm(ProjectToolHandler projectToolHandler, IDecompositionService decompositionService)
+        public ApplicationForm(ProjectToolHandler projectToolHandler, ICalculationsService calculationsService)
         {
+            this.chartService = new ChartService();
             this.projectToolHandler = projectToolHandler;
-            this.decompositionService = decompositionService;
+            this.decompositionService = new DecompositionService(calculationsService);
             InitializeComponent();
         }
         
@@ -298,15 +300,25 @@ namespace CourseWork
                 technogenicObject.MeasurementAccuracy,
                 Convert.ToDouble(AlphaTextBox.Text),
                 decompositionService,
+                chartService,
                 dataGridViewTable, 
                 technogenicObjectService.GetDataTable());
 
-            firstLevelForm.Show(); 
+            firstLevelForm.Show();
         }
 
         private void SecondLevelToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SecondLevelForm secondLevelForm = new SecondLevelForm(
+                decompositionService,
+                chartService,
+                technogenicObject.StructuralBlocksCount,
+                technogenicObject.GeodeticMarksCount,
+                technogenicObject.MeasurementAccuracy,
+                Convert.ToDouble(AlphaTextBox.Text),
+                dataGridViewTable);
 
+            secondLevelForm.Show();
         }
 
         private void ObjectToolStripDropDownButton_Click(object sender, EventArgs e)
@@ -314,6 +326,12 @@ namespace CourseWork
 
         }
 
-        
+        private void FourthLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FourthLevelForm fourthLevelForm = new FourthLevelForm();
+
+            fourthLevelForm.Show();
+        }
+
     }
 }

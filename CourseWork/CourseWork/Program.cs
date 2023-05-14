@@ -20,11 +20,11 @@ namespace CourseWork
             // initialize handlers for forms
             ProjectToolHandler projectToolHandler = new ProjectToolHandler();
 
-            IDecompositionService decompositionService = new DecompositionService();
+            ICalculationsService calculationsService = new CalculationsService();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ApplicationForm(projectToolHandler, decompositionService));
+            Application.Run(new ApplicationForm(projectToolHandler, calculationsService));
         }
     }
 }

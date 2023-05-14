@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace CourseWork.Service.Decomposition.FirstLevel
+namespace CourseWork.Service.Chart.FirstLevel
 {
-    internal class ChartService : IFirstLevelChartService
+    internal class ChartService : IFirstLevelChartService, ISecondLevelChartService
     {
-        public void AddXYLine(string serieName, List<double> xValues, List<double> yValues, Chart chart)
+        public void AddXYLine(string serieName, List<double> xValues, List<double> yValues, System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
             chart.ChartAreas[0].AxisX.Title = "Эпоха";
             chart.ChartAreas[0].AxisY.Title = "Значение";
@@ -25,14 +25,13 @@ namespace CourseWork.Service.Decomposition.FirstLevel
             {
                 chart.Series[serieName].Points.AddXY(xValues[i], yValues[i]);
                 chart.Series[serieName].Points[i].Label = i.ToString();
-
             }
         }
 
-        public void AddMALine(List<double> MValues, List<double> alphaValues, Chart chart, string serieName)
+        public void AddMAndAlphaLine(string serieName, List<double> MValues, List<double> alphaValues, System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
-            chart.ChartAreas[0].AxisX.Title = "M";
-            chart.ChartAreas[0].AxisY.Title = "Alpha";
+            chart.ChartAreas[0].AxisX.Title = "М";
+            chart.ChartAreas[0].AxisY.Title = "Альфа";
             chart.ChartAreas[0].AxisY.IsStartedFromZero = false;
             chart.Series.Add(serieName);
             chart.Series[serieName].MarkerStyle = MarkerStyle.Circle; // стиль маркера точки данных
@@ -46,10 +45,9 @@ namespace CourseWork.Service.Decomposition.FirstLevel
                 chart.Series[serieName].Points.AddXY(MValues[i], alphaValues[i]);
                 chart.Series[serieName].Points[i].Label = i.ToString();
             }
-
         }
 
-        public void AddPredictedValues(string serieName, List<double> xValues, List<double> yValues, Chart chart)
+        public void AddPredictedValue(string serieName, List<double> xValues, List<double> yValues, System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
             chart.Series.Add(serieName);
             chart.ChartAreas[0].AxisY.IsStartedFromZero = false;
@@ -61,7 +59,7 @@ namespace CourseWork.Service.Decomposition.FirstLevel
             chart.Series[serieName].ToolTip = "X = #VALX, Y = #VALY";
         }
 
-        public void RemoveLine(Chart chart, string serieName)
+        public void RemoveLine(System.Windows.Forms.DataVisualization.Charting.Chart chart, string serieName)
         {
             chart.Series[serieName].Points.Clear();
             chart.Series.Remove(chart.Series[serieName]);

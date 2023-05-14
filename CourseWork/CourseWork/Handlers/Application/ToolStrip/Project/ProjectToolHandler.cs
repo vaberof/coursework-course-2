@@ -210,12 +210,11 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
                     }
 
                     // парсим количество геодезических марок
-                    if (line.StartsWith("Количество геодезических"))
+                    if (line.StartsWith("Количество геодезических марок"))
                     {
                         List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        //MessageBox.Show(splittedLine[1]);
+                        // MessageBox.Show(splittedLine[1]);
                         geodeticMarksCount = Convert.ToInt32(splittedLine[1]);
-
                     }
 
                     // парсим количество эпох измерений
@@ -223,7 +222,7 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
                     {
                         List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                         //MessageBox.Show(splittedLine[1].Split(' ')[1]);
-                        geodeticMarksCount = Convert.ToInt32(splittedLine[1].Split(' ')[1]);
+                        measurementEpochsCount = Convert.ToInt32(splittedLine[1].Split(' ')[1]);
                     }
 
                     // парсим точность измерений

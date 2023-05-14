@@ -41,6 +41,7 @@
             this.ObjectShowDescriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DecompositionToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.FirstLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SecondLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTable = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -50,7 +51,7 @@
             this.EpsilonLabel = new System.Windows.Forms.Label();
             this.AlphaLabel = new System.Windows.Forms.Label();
             this.ObjectDesciptionLabel = new System.Windows.Forms.Label();
-            this.SecondLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FourthLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenuToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ObjectPictureBox)).BeginInit();
@@ -65,7 +66,7 @@
             this.DecompositionToolStripDropDownButton});
             this.TopMenuToolStrip.Location = new System.Drawing.Point(0, 0);
             this.TopMenuToolStrip.Name = "TopMenuToolStrip";
-            this.TopMenuToolStrip.Size = new System.Drawing.Size(1362, 27);
+            this.TopMenuToolStrip.Size = new System.Drawing.Size(1362, 31);
             this.TopMenuToolStrip.TabIndex = 1;
             this.TopMenuToolStrip.Text = "TopMenuToolStrip";
             this.TopMenuToolStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.TopMenuToolStrip_ItemClicked);
@@ -81,7 +82,7 @@
             this.ProjectToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("ProjectToolStripDropDownButton.Image")));
             this.ProjectToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ProjectToolStripDropDownButton.Name = "ProjectToolStripDropDownButton";
-            this.ProjectToolStripDropDownButton.Size = new System.Drawing.Size(73, 24);
+            this.ProjectToolStripDropDownButton.Size = new System.Drawing.Size(73, 28);
             this.ProjectToolStripDropDownButton.Text = "Проект";
             // 
             // OpenProjectToolStripMenuItem
@@ -115,7 +116,7 @@
             this.ObjectToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("ObjectToolStripDropDownButton.Image")));
             this.ObjectToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ObjectToolStripDropDownButton.Name = "ObjectToolStripDropDownButton";
-            this.ObjectToolStripDropDownButton.Size = new System.Drawing.Size(73, 24);
+            this.ObjectToolStripDropDownButton.Size = new System.Drawing.Size(73, 28);
             this.ObjectToolStripDropDownButton.Text = "Объект";
             this.ObjectToolStripDropDownButton.Click += new System.EventHandler(this.ObjectToolStripDropDownButton_Click);
             // 
@@ -154,11 +155,12 @@
             this.DecompositionToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.DecompositionToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FirstLevelToolStripMenuItem,
-            this.SecondLevelToolStripMenuItem});
+            this.SecondLevelToolStripMenuItem,
+            this.FourthLevelToolStripMenuItem});
             this.DecompositionToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("DecompositionToolStripDropDownButton.Image")));
             this.DecompositionToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DecompositionToolStripDropDownButton.Name = "DecompositionToolStripDropDownButton";
-            this.DecompositionToolStripDropDownButton.Size = new System.Drawing.Size(128, 24);
+            this.DecompositionToolStripDropDownButton.Size = new System.Drawing.Size(128, 28);
             this.DecompositionToolStripDropDownButton.Text = "Декомпозиция";
             // 
             // FirstLevelToolStripMenuItem
@@ -167,6 +169,13 @@
             this.FirstLevelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.FirstLevelToolStripMenuItem.Text = "1 уровень";
             this.FirstLevelToolStripMenuItem.Click += new System.EventHandler(this.FirstLevelToolStripMenuItem_Click);
+            // 
+            // SecondLevelToolStripMenuItem
+            // 
+            this.SecondLevelToolStripMenuItem.Name = "SecondLevelToolStripMenuItem";
+            this.SecondLevelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.SecondLevelToolStripMenuItem.Text = "2 уровень";
+            this.SecondLevelToolStripMenuItem.Click += new System.EventHandler(this.SecondLevelToolStripMenuItem_Click);
             // 
             // dataGridViewTable
             // 
@@ -268,12 +277,12 @@
             this.ObjectDesciptionLabel.Visible = false;
             this.ObjectDesciptionLabel.Click += new System.EventHandler(this.label1_Click);
             // 
-            // SecondLevelToolStripMenuItem
+            // FourthLevelToolStripMenuItem
             // 
-            this.SecondLevelToolStripMenuItem.Name = "SecondLevelToolStripMenuItem";
-            this.SecondLevelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.SecondLevelToolStripMenuItem.Text = "2 уровень";
-            this.SecondLevelToolStripMenuItem.Click += new System.EventHandler(this.SecondLevelToolStripMenuItem_Click);
+            this.FourthLevelToolStripMenuItem.Name = "FourthLevelToolStripMenuItem";
+            this.FourthLevelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.FourthLevelToolStripMenuItem.Text = "4 уровень";
+            this.FourthLevelToolStripMenuItem.Click += new System.EventHandler(this.FourthLevelToolStripMenuItem_Click);
             // 
             // ApplicationForm
             // 
@@ -327,6 +336,7 @@
         private System.Windows.Forms.ToolStripDropDownButton DecompositionToolStripDropDownButton;
         private System.Windows.Forms.ToolStripMenuItem FirstLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SecondLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FourthLevelToolStripMenuItem;
     }
 }
 
