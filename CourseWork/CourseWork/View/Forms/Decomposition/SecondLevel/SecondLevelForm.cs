@@ -335,10 +335,10 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
 
         private void fillEpochColumnInEstimationTable()
         {
-            for (int i = 0; i < calculatedAlphaAndMValues["Epoches"].Count - 1; i++)
+            for (int i = 0; i < calculatedAlphaAndMValues["Epochs"].Count - 1; i++)
             {
                 EstimationMarksDataGridView.Rows.Add();
-                EstimationMarksDataGridView.Rows[i].Cells[0].Value = Convert.ToInt32(calculatedAlphaAndMValues["Epoches"][i]);
+                EstimationMarksDataGridView.Rows[i].Cells[0].Value = Convert.ToInt32(calculatedAlphaAndMValues["Epochs"][i]);
             }
         }
 
@@ -384,13 +384,13 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
         
         private void fillEstimationEpochValues()
         {
-            List<double> epoches = new List<double>();
+            List<double> epochs = new List<double>();
 
             for (int row = 0; row < CoordinatesMarksDataGridView.Rows.Count; row++)
             {
-                epoches.Add(Convert.ToDouble(CoordinatesMarksDataGridView.Rows[row].Cells[0].Value));
+                epochs.Add(Convert.ToDouble(CoordinatesMarksDataGridView.Rows[row].Cells[0].Value));
             }
-            calculatedAlphaAndMValues["Epoches"] = epoches;
+            calculatedAlphaAndMValues["Epochs"] = epochs;
         }
 
         private void fillChooseBlockComboBox(ComboBox comboBox)
@@ -471,7 +471,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                     serieName,
-                    calculatedAlphaAndMValues["Epoches"],
+                    calculatedAlphaAndMValues["Epochs"],
                     calculatedAlphaAndMValues["lowerBoundMValues"],
                     MChart);
             }
@@ -488,7 +488,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                     serieName,
-                    calculatedAlphaAndMValues["Epoches"],
+                    calculatedAlphaAndMValues["Epochs"],
                     calculatedAlphaAndMValues["MValues"],
                     MChart);
             }
@@ -505,7 +505,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                     serieName,
-                    calculatedAlphaAndMValues["Epoches"],
+                    calculatedAlphaAndMValues["Epochs"],
                     calculatedAlphaAndMValues["upperBoundMValues"],
                     MChart);
             }
@@ -522,7 +522,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                     serieName,
-                    calculatedAlphaAndMValues["Epoches"],
+                    calculatedAlphaAndMValues["Epochs"],
                     calculatedAlphaAndMValues["predictedLowerBoundMValues"],
                     MChart);
             }
@@ -539,7 +539,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                 serieName,
-                calculatedAlphaAndMValues["Epoches"],
+                calculatedAlphaAndMValues["Epochs"],
                 calculatedAlphaAndMValues["predictedMValues"],
                 MChart);
             }
@@ -556,7 +556,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                     serieName,
-                    calculatedAlphaAndMValues["Epoches"],
+                    calculatedAlphaAndMValues["Epochs"],
                     calculatedAlphaAndMValues["predictedUpperBoundMValues"],
                     MChart);
             }
@@ -573,7 +573,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                 serieName,
-                calculatedAlphaAndMValues["Epoches"],
+                calculatedAlphaAndMValues["Epochs"],
                 calculatedAlphaAndMValues["lowerBoundAlphaValues"],
                 AlphaChart);
             }
@@ -590,7 +590,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                 serieName,
-                calculatedAlphaAndMValues["Epoches"],
+                calculatedAlphaAndMValues["Epochs"],
                 calculatedAlphaAndMValues["alphaValues"],
                 AlphaChart);
             }
@@ -607,7 +607,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                 serieName,
-                calculatedAlphaAndMValues["Epoches"],
+                calculatedAlphaAndMValues["Epochs"],
                 calculatedAlphaAndMValues["upperBoundAlphaValues"],
                 AlphaChart);
             }
@@ -624,7 +624,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                 serieName,
-                calculatedAlphaAndMValues["Epoches"],
+                calculatedAlphaAndMValues["Epochs"],
                 calculatedAlphaAndMValues["predictedLowerBoundAlphaValues"],
                 AlphaChart);
             }
@@ -641,7 +641,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                 serieName,
-                calculatedAlphaAndMValues["Epoches"],
+                calculatedAlphaAndMValues["Epochs"],
                 calculatedAlphaAndMValues["predictedAlphaValues"],
                 AlphaChart);
             }
@@ -658,7 +658,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             {
                 chartService.AddXYLine(
                 serieName,
-                calculatedAlphaAndMValues["Epoches"],
+                calculatedAlphaAndMValues["Epochs"],
                 calculatedAlphaAndMValues["predictedUpperBoundAlphaValues"],
                 AlphaChart);
             }

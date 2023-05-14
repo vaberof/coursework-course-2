@@ -123,7 +123,7 @@ namespace CourseWork
                 selectedRowIndexes.Add(row.Index);
             }
 
-            technogenicObjectService.DeleteEpoches(dataGridViewTable, selectedRowIndexes, ref currentEpochCount);                
+            technogenicObjectService.DeleteEpochs(dataGridViewTable, selectedRowIndexes, ref currentEpochCount);                
             
             for (int i = 0; i < selectedRowIndexes.Count; i++)
             {

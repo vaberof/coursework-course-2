@@ -74,17 +74,17 @@ namespace CourseWork.View.Forms.Decomposition.FourthLevel
 
         private void addXYLine(string mark)
         {
-            List<double> epoches = getEpoches();
+            List<double> epochs = getEpochs();
             List<double> marksValues = getMarksValues(mark);
 
-            chartService.AddXYLine(mark, epoches, marksValues, ResponseFunctionChart);
+            chartService.AddXYLine(mark, epochs, marksValues, ResponseFunctionChart);
 
             List<double> predictedMarksValues = getPredictedMarksValues(marksValues);
 
             string predictedMarkSerie = "Прогноз " + mark;
 
-            epoches.Add(epoches.Last() + 1);
-            chartService.AddPredictedValue(predictedMarkSerie, epoches, predictedMarksValues, ResponseFunctionChart);
+            epochs.Add(epochs.Last() + 1);
+            chartService.AddPredictedValue(predictedMarkSerie, epochs, predictedMarksValues, ResponseFunctionChart);
         }
         
         private void removeXYLine(string mark)
@@ -111,16 +111,16 @@ namespace CourseWork.View.Forms.Decomposition.FourthLevel
             return decompositionService.getPredictedValues(marksValues, alpha);
         }
 
-        private List<double> getEpoches()
+        private List<double> getEpochs()
         {
-            List<double> epoches = new List<double>();
+            List<double> epochs = new List<double>();
 
             for (int i = 0; i < mainCoordinatesTable.Rows.Count - 1; i++)
             {
-                epoches.Add(Convert.ToInt32(mainCoordinatesTable.Rows[i].Cells[0].Value));
+                epochs.Add(Convert.ToInt32(mainCoordinatesTable.Rows[i].Cells[0].Value));
             }
 
-            return epoches;
+            return epochs;
         }  
     }
 }

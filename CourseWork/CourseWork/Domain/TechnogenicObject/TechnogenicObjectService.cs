@@ -95,7 +95,7 @@ namespace CourseWork.Domain.TechnogenicObject
             technogenicObjectStorage.FillDataTable(dataTable);
         }
 
-        public void DeleteEpoches(DataGridView mainCoordinatesTable, List<int> selectedRowsIndexes, ref int currentEpochCount)
+        public void DeleteEpochs(DataGridView mainCoordinatesTable, List<int> selectedRowsIndexes, ref int currentEpochCount)
         {
             if (currentEpochCount - selectedRowsIndexes.Count < 2)
             {

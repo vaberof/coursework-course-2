@@ -12,7 +12,7 @@ namespace CourseWork.Domain.TechnogenicObject
     {
         void FillMainCoordinatesTable(DataGridView mainCoordinatesTable);
         void AddEpoch(DataGridView mainCoordinatesTable, ref int currentEpochCount);
-        void DeleteEpoches(DataGridView mainCoordinatesTable, List<int> selectedRowsIndexes, ref int currentEpochCount); 
+        void DeleteEpochs(DataGridView mainCoordinatesTable, List<int> selectedRowsIndexes, ref int currentEpochCount); 
         DataTable GetDataTable();
     }
 }

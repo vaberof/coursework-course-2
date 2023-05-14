@@ -128,20 +128,20 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
             command.ExecuteNonQuery();
         }
 
-        public void DeleteRowFromTable(List<int> epoches)
+        public void DeleteRowFromTable(List<int> epochs)
         {
-            string convertedEpoches = "";
+            string convertedEpochs = "";
 
-            for (int i = 0; i < epoches.Count; i++)
+            for (int i = 0; i < epochs.Count; i++)
             {                
-                convertedEpoches += epoches[i].ToString();
-                if (i < epoches.Count - 1)
+                convertedEpochs += epochs[i].ToString();
+                if (i < epochs.Count - 1)
                 {
-                    convertedEpoches += ",";
+                    convertedEpochs += ",";
                 }
             }
             
-            string SQLQuery = "DELETE FROM [" + getTableName() + "] WHERE Эпоха IN " + "(" + convertedEpoches + ")";
+            string SQLQuery = "DELETE FROM [" + getTableName() + "] WHERE Эпоха IN " + "(" + convertedEpochs + ")";
             SQLiteCommand command = new SQLiteCommand(db.connection);
             command.CommandText = SQLQuery;
             command.ExecuteNonQuery();
