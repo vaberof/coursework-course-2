@@ -1,11 +1,12 @@
 ﻿using CourseWork.Domain.TechnogenicObject;
 using CourseWork.Service.Chart;
-using CourseWork.Service.Chart.FirstLevel;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using CourseWork.Service.Decomposition;
 
 namespace CourseWork.View.Forms.Decomposition
 {
@@ -21,7 +22,7 @@ namespace CourseWork.View.Forms.Decomposition
         private double epsilon;
         private double alpha;
 
-        private DataGridView dataGridTable;
+        private DataGridView mainCoordinatesTable;
         private DataTable dataTable;
 
         public FirstLevelForm(
@@ -29,7 +30,7 @@ namespace CourseWork.View.Forms.Decomposition
             double alpha,
             IFirstLevelDecompositionService decompositionService,
             IFirstLevelChartService chartService,
-            DataGridView dataGridTable,
+            DataGridView mainCoordinatesTable,
             DataTable dataTable)
         {
             this.decompositionService = decompositionService;
@@ -41,7 +42,7 @@ namespace CourseWork.View.Forms.Decomposition
             this.epsilon = epsilon;
             this.alpha = alpha;
 
-            this.dataGridTable = dataGridTable;
+            this.mainCoordinatesTable = mainCoordinatesTable;
             this.dataTable = dataTable;
             InitializeComponent();
         }
@@ -54,13 +55,13 @@ namespace CourseWork.View.Forms.Decomposition
 
         private void fillCoordinatesTable()
         {
-            decompositionService.CreateCoordinatesTableColumns(FirstLevelCoordinatesDataGridView);
+            decompositionService.CreateCoordinatesTableColumns(coordinatesDataGridView);
             fillEpochColumnInCoordinatesTable();
 
             decompositionService.CalculateValuesInCoordinatesTable(
                 ref coordinatesTableValues, 
                 ref calculatedAlphaAndMValues,
-                dataGridTable,
+                mainCoordinatesTable,
                 dataTable,
                 epsilon, 
                 alpha);
@@ -71,13 +72,13 @@ namespace CourseWork.View.Forms.Decomposition
 
         private void fillEstimationTable()
         {
-            decompositionService.CreateEstimationTableColumns(FirstLevelEstimationDataGridView);
+            decompositionService.CreateEstimationTableColumns(EstimationDataGridView);
             fillEpochColumnInEstimationTable();
             fillPredictedMValuesInEstimationTable();
 
             decompositionService.FillValuesInEstimationTable(
                 ref calculatedAlphaAndMValues,
-                FirstLevelEstimationDataGridView);
+                EstimationDataGridView);
         }
 
         private void fillCalculatedValuesInCoordinatesTable()
@@ -86,57 +87,68 @@ namespace CourseWork.View.Forms.Decomposition
             {
                 for (int j = 0; j < coordinatesTableValues[i].Count; j++)
                 {
-                    FirstLevelCoordinatesDataGridView.Rows[j].Cells[i + 1].Value = Convert.ToDouble(coordinatesTableValues[i][j]);
+                    coordinatesDataGridView.Rows[j].Cells[i + 1].Value = Convert.ToDouble(coordinatesTableValues[i][j]);
                 }
             }
         }
 
         private void fillEpochColumnInCoordinatesTable()
         {
-            for (int row = 0; row < dataGridTable.Rows.Count; row++)
+            for (int row = 0; row < mainCoordinatesTable.Rows.Count; row++)
             {
-                FirstLevelCoordinatesDataGridView.Rows.Add();
-                FirstLevelCoordinatesDataGridView.Rows[row].Cells[0].Value = dataGridTable.Rows[row].Cells[0].Value;
+                coordinatesDataGridView.Rows.Add();
+                coordinatesDataGridView.Rows[row].Cells[0].Value = mainCoordinatesTable.Rows[row].Cells[0].Value;
             }
 
-            FirstLevelCoordinatesDataGridView.Rows[FirstLevelCoordinatesDataGridView.Rows.Count - 2].Cells[0].Value =
-                Convert.ToInt32(dataGridTable.Rows[FirstLevelCoordinatesDataGridView.Rows.Count - 3].Cells[0].Value.ToString()) + 1;
+            coordinatesDataGridView.Rows[coordinatesDataGridView.Rows.Count - 2].Cells[0].Value =
+                Convert.ToInt32(mainCoordinatesTable.Rows[coordinatesDataGridView.Rows.Count - 3].Cells[0].Value.ToString()) + 1;
         }
 
         private void fillPredictedMValuesInEstimationTable()
         {
             // в колонках [1-3] отображаются значения M 
-
-            for (int i = 0; i < calculatedAlphaAndMValues["lowerBoundMValues"].Count; i++)
-            {
-                FirstLevelEstimationDataGridView.Rows[i].Cells[1].Value = calculatedAlphaAndMValues["lowerBoundMValues"][i];
-            }
-
-            for (int i = 0; i < calculatedAlphaAndMValues["MValues"].Count; i++)
-            {
-                FirstLevelEstimationDataGridView.Rows[i].Cells[2].Value = calculatedAlphaAndMValues["MValues"][i];
-            }
-
-            for (int i = 0; i < calculatedAlphaAndMValues["upperBoundMValues"].Count; i++)
-            {
-                FirstLevelEstimationDataGridView.Rows[i].Cells[3].Value = calculatedAlphaAndMValues["upperBoundMValues"][i];
-            }
+            fillLowerBoundMValuesInEstimationTable();
+            fillMValuesInEstimationTable();
+            fillUpperBoundMValuesInEstimationTable();
 
             // Добавляем прогнозные значения для каждой M
-            int lastEstimationTableRowIndex = FirstLevelEstimationDataGridView.Rows.Count - 2;
+            int lastEstimationTableRowIndex = EstimationDataGridView.Rows.Count - 2;
             int lastPredictedMValueIndex = calculatedAlphaAndMValues["predictedMValues"].Count - 1;
 
-            FirstLevelEstimationDataGridView.Rows[lastEstimationTableRowIndex].Cells[1].Value = calculatedAlphaAndMValues["predictedLowerBoundMValues"][lastPredictedMValueIndex];
-            FirstLevelEstimationDataGridView.Rows[lastEstimationTableRowIndex].Cells[2].Value = calculatedAlphaAndMValues["predictedMValues"][lastPredictedMValueIndex];
-            FirstLevelEstimationDataGridView.Rows[lastEstimationTableRowIndex].Cells[3].Value = calculatedAlphaAndMValues["predictedUpperBoundMValues"][lastPredictedMValueIndex];
+            EstimationDataGridView.Rows[lastEstimationTableRowIndex].Cells[1].Value = calculatedAlphaAndMValues["predictedLowerBoundMValues"][lastPredictedMValueIndex];
+            EstimationDataGridView.Rows[lastEstimationTableRowIndex].Cells[2].Value = calculatedAlphaAndMValues["predictedMValues"][lastPredictedMValueIndex];
+            EstimationDataGridView.Rows[lastEstimationTableRowIndex].Cells[3].Value = calculatedAlphaAndMValues["predictedUpperBoundMValues"][lastPredictedMValueIndex];
         }
 
+        private void fillLowerBoundMValuesInEstimationTable()
+        {
+            for (int i = 0; i < calculatedAlphaAndMValues["lowerBoundMValues"].Count; i++)
+            {
+                EstimationDataGridView.Rows[i].Cells[1].Value = calculatedAlphaAndMValues["lowerBoundMValues"][i];
+            }
+        }
+
+        private void fillMValuesInEstimationTable()
+        {
+            for (int i = 0; i < calculatedAlphaAndMValues["MValues"].Count; i++)
+            {
+                EstimationDataGridView.Rows[i].Cells[2].Value = calculatedAlphaAndMValues["MValues"][i];
+            }
+        }
+
+        private void fillUpperBoundMValuesInEstimationTable()
+        {
+            for (int i = 0; i < calculatedAlphaAndMValues["upperBoundMValues"].Count; i++)
+            {
+                EstimationDataGridView.Rows[i].Cells[3].Value = calculatedAlphaAndMValues["upperBoundMValues"][i];
+            }
+        }
         private void fillEpochColumnInEstimationTable()
         {
             for (int i = 0; i < calculatedAlphaAndMValues["Epoches"].Count - 1; i++)
             {
-                FirstLevelEstimationDataGridView.Rows.Add();
-                FirstLevelEstimationDataGridView.Rows[i].Cells[0].Value = Convert.ToInt32(calculatedAlphaAndMValues["Epoches"][i]);
+                EstimationDataGridView.Rows.Add();
+                EstimationDataGridView.Rows[i].Cells[0].Value = Convert.ToInt32(calculatedAlphaAndMValues["Epoches"][i]);
             }
         }
 
@@ -144,9 +156,9 @@ namespace CourseWork.View.Forms.Decomposition
         {
             List<double> epoches = new List<double>();
 
-            for (int row = 0; row < FirstLevelCoordinatesDataGridView.Rows.Count; row++)
+            for (int row = 0; row < coordinatesDataGridView.Rows.Count; row++)
             {
-                epoches.Add(Convert.ToDouble(FirstLevelCoordinatesDataGridView.Rows[row].Cells[0].Value));
+                epoches.Add(Convert.ToDouble(coordinatesDataGridView.Rows[row].Cells[0].Value));
             }
             calculatedAlphaAndMValues["Epoches"] = epoches;
         }
@@ -155,9 +167,9 @@ namespace CourseWork.View.Forms.Decomposition
         private void LowerBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "M-";
-            if (FirstLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -165,16 +177,16 @@ namespace CourseWork.View.Forms.Decomposition
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["lowerBoundMValues"],
-                    FirstLevelMChart);
+                    MChart);
             }
         }
 
         private void MCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "M";
-            if (FirstLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -182,16 +194,16 @@ namespace CourseWork.View.Forms.Decomposition
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["MValues"],
-                    FirstLevelMChart);
+                    MChart);
             }
         }
 
         private void UpperBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "M+";
-            if (FirstLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -199,16 +211,16 @@ namespace CourseWork.View.Forms.Decomposition
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["upperBoundMValues"],
-                    FirstLevelMChart);
+                    MChart);
             }
         }
 
         private void PredictedLowerBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз М-";
-            if (FirstLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -216,16 +228,16 @@ namespace CourseWork.View.Forms.Decomposition
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["predictedLowerBoundMValues"],
-                    FirstLevelMChart);
+                    MChart);
             }
         }
 
         private void PredictedMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз М";
-            if (FirstLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -233,16 +245,16 @@ namespace CourseWork.View.Forms.Decomposition
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedMValues"],
-                FirstLevelMChart);
+                MChart);
             }
         }
 
         private void PredictedUpperBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз М+";
-            if (FirstLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -250,16 +262,16 @@ namespace CourseWork.View.Forms.Decomposition
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["predictedUpperBoundMValues"],
-                    FirstLevelMChart);
+                    MChart);
             }
         }        
 
         private void LowerBoundAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Альфа-";
-            if (FirstLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -267,16 +279,16 @@ namespace CourseWork.View.Forms.Decomposition
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["lowerBoundAlphaValues"],
-                FirstLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void AlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Альфа";
-            if (FirstLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -284,16 +296,16 @@ namespace CourseWork.View.Forms.Decomposition
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["alphaValues"],
-                FirstLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void UpperBoundAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Альфа+";
-            if (FirstLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -301,16 +313,16 @@ namespace CourseWork.View.Forms.Decomposition
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["upperBoundAlphaValues"],
-                FirstLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void PredictedLowerBoundAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Альфа-";
-            if (FirstLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -318,16 +330,16 @@ namespace CourseWork.View.Forms.Decomposition
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedLowerBoundAlphaValues"],
-                FirstLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void PredictedAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Альфа";
-            if (FirstLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -335,16 +347,16 @@ namespace CourseWork.View.Forms.Decomposition
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedAlphaValues"],
-                FirstLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void PredictedUpperAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Альфа+";
-            if (FirstLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(FirstLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -352,41 +364,136 @@ namespace CourseWork.View.Forms.Decomposition
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedUpperBoundAlphaValues"],
-                FirstLevelAlphaChart);
+                AlphaChart);
             }
         }
 
-        // кнопка очистить на графике
-        private void button2_Click(object sender, EventArgs e)
+        // МЕТОДЫ ДЛЯ ГРАФИКОВ ФУНКЦИИ ОТКЛИКА
+        private void LowerBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
-
+            string serieName = "Функция отклика-";
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            {
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
+            }
+            else
+            {
+                chartService.AddMAndAlphaLine(
+                serieName,
+                calculatedAlphaAndMValues["lowerBoundMValues"],
+                calculatedAlphaAndMValues["lowerBoundAlphaValues"],
+                ResponseFunctionChart);
+            }
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void PredictedLowerBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
-
+            string serieName = "Прогноз Функция отклика-";
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            {
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
+            }
+            else
+            {
+                chartService.AddPredictedValue(
+                serieName,
+                calculatedAlphaAndMValues["predictedLowerBoundMValues"],
+                calculatedAlphaAndMValues["predictedLowerBoundAlphaValues"],
+                ResponseFunctionChart);
+            }
         }
 
-        private void groupBox1_Enter_1(object sender, EventArgs e)
+        private void ResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
-
+            string serieName = "Функция отклика";
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            {
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
+            }
+            else
+            {
+                chartService.AddMAndAlphaLine(
+                serieName,
+                calculatedAlphaAndMValues["MValues"],
+                calculatedAlphaAndMValues["alphaValues"],
+                ResponseFunctionChart);
+            }
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
+        private void PredictedResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
-
+            string serieName = "Прогноз Функция отклика";
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            {
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
+            }
+            else
+            {
+                chartService.AddPredictedValue(
+                serieName,
+                calculatedAlphaAndMValues["predictedMValues"],
+                calculatedAlphaAndMValues["predictedAlphaValues"],
+                ResponseFunctionChart);
+            }
         }
 
-        private void FirstLevelCoordinatesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void UpperBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
-
+            string serieName = "Функция отклика+";
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            {
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
+            }
+            else
+            {
+                chartService.AddMAndAlphaLine(
+                serieName,
+                calculatedAlphaAndMValues["upperBoundMValues"],
+                calculatedAlphaAndMValues["upperBoundAlphaValues"],
+                ResponseFunctionChart);
+            }
         }
 
-        private void FirstLevelMChart_Click(object sender, EventArgs e)
+        private void PredictedUpperBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
-
+            string serieName = "Прогноз Функция отклика+";
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            {
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
+            }
+            else
+            {
+                chartService.AddPredictedValue(
+                serieName,
+                calculatedAlphaAndMValues["predictedUpperBoundMValues"],
+                calculatedAlphaAndMValues["predictedUpperBoundAlphaValues"],
+                ResponseFunctionChart);
+            }
+        }
+        private void MChartClearButton_Click(object sender, EventArgs e)
+        {
+            clearGroupBoxCheckBoxes(MChartGroupBox);
+            chartService.ClearChart(MChart);
         }
 
-        
+        private void AlphaChartClearButton_Click(object sender, EventArgs e)
+        {
+            clearGroupBoxCheckBoxes(AlphaChartGroupBox);
+            chartService.ClearChart(AlphaChart);
+        }
+
+        private void ResponseFunctionChartClearButton_Click(object sender, EventArgs e)
+        {
+            clearGroupBoxCheckBoxes(ResponseFunctionGroupBox);
+            chartService.ClearChart(ResponseFunctionChart);
+        }
+
+        private void clearGroupBoxCheckBoxes(GroupBox groupBox)
+        {
+            foreach (CheckBox c in groupBox.Controls.OfType<CheckBox>())
+            {
+                c.Checked = false;
+            }
+        }        
     }
 }

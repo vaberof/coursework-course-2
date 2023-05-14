@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace CourseWork.Service.Chart.FirstLevel
+namespace CourseWork.Service.Chart
 {
     internal class ChartService : IFirstLevelChartService, ISecondLevelChartService, IFourthLevelChartService
     {
@@ -18,7 +18,7 @@ namespace CourseWork.Service.Chart.FirstLevel
             chart.Series[serieName].MarkerStyle = MarkerStyle.Circle;
             chart.Series[serieName].MarkerSize = 6;
             chart.Series[serieName].MarkerColor = chart.Series[serieName].Color;
-            chart.Series[serieName].ChartType = SeriesChartType.Line;
+            chart.Series[serieName].ChartType = SeriesChartType.Spline;
             chart.Series[serieName].ToolTip = "X = #VALX, Y = #VALY";
 
             for (int i = 0; i < yValues.Count; i++)
@@ -37,7 +37,7 @@ namespace CourseWork.Service.Chart.FirstLevel
             chart.Series[serieName].MarkerStyle = MarkerStyle.Circle; // стиль маркера точки данных
             chart.Series[serieName].MarkerSize = 10;
             chart.Series[serieName].MarkerColor = chart.Series[serieName].Color;
-            chart.Series[serieName].ChartType = SeriesChartType.Line;
+            chart.Series[serieName].ChartType = SeriesChartType.Spline;
             chart.Series[serieName].ToolTip = "X = #VALX, Y = #VALY";
 
             for (int i = 0; i < MValues.Count; i++)

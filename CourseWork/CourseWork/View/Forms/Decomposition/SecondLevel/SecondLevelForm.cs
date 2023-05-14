@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using CourseWork.Service.Decomposition;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +30,9 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
 
         private double epsilon;
         private double alpha;
+        string pngFilePath;
 
-        private DataGridView dataGridTable;
+        private DataGridView mainCoordinatesTable;
 
         public SecondLevelForm(
             ISecondLevelDecompositionService decompositionService,
@@ -39,7 +41,8 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             int geodeticMarksCount,
             double epsilon,
             double alpha,
-            DataGridView dataGridTable)
+            string pngFilePath,
+            DataGridView mainCoordinatesTable)
         {
             this.decompositionService = decompositionService;
             this.chartService = chartService;
@@ -52,8 +55,8 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
 
             this.epsilon = epsilon;
             this.alpha = alpha;
-
-            this.dataGridTable = dataGridTable;
+            this.pngFilePath = pngFilePath;
+            this.mainCoordinatesTable = mainCoordinatesTable;
 
             initBlockNames();
 
@@ -66,6 +69,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             initDistributedMarks();
             initNeedToDistributeLabel();
             fillMarksListBox();
+            showObjectPicture();
             CalculationsAndChartsTabPage.Enabled = false;
         }
 
@@ -79,7 +83,6 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             changeNeedToDistributeLabel();
         }
 
-        // Заполняем марками listBox
         private void fillMarksListBox()
         {
             for (int i = 1; i <= marksCount; i++)
@@ -219,7 +222,12 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             return distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].Count == needMarksOnEachBlock;
         }
 
-        // Доступные названия блоков
+        private void showObjectPicture()
+        {
+            ObjectPictureBox.Load(pngFilePath);
+            ObjectPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
         private void initBlockNames()
         {
             this.blockNames = new List<string>();
@@ -230,13 +238,11 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             this.blockNames.Add("Д");
         }
 
-        // Начальное количество марок, необходимых для распределения на одном блоке
         private void initNeedToDistributeLabel()
         {
             NeedToDistributeLabel.Text = "Осталось распределить марок: " + Convert.ToString(needMarksOnEachBlock);
         }
 
-        // Сколько марок осталось распределить на текущем выбранном блоке
         private void changeNeedToDistributeLabel()
         {
             if (!distributedMarks.ContainsKey(ChooseBlockComboBox.SelectedItem.ToString()))
@@ -285,7 +291,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 ref coordinatesTableValues,
                 ref calculatedAlphaAndMValues,
                 distributedMarks[ChooseBlockCalculationsAndChartsComboBox.SelectedItem.ToString()],
-                dataGridTable,
+                mainCoordinatesTable,
                 epsilon,
                 alpha);
 
@@ -306,14 +312,14 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
         private void fillEpochColumnInCoordinatesTable()
         {
 
-            for (int row = 0; row < dataGridTable.Rows.Count; row++)
+            for (int row = 0; row < mainCoordinatesTable.Rows.Count; row++)
             {
                 CoordinatesMarksDataGridView.Rows.Add();
-                CoordinatesMarksDataGridView.Rows[row].Cells[0].Value = dataGridTable.Rows[row].Cells[0].Value;
+                CoordinatesMarksDataGridView.Rows[row].Cells[0].Value = mainCoordinatesTable.Rows[row].Cells[0].Value;
             }
 
             CoordinatesMarksDataGridView.Rows[CoordinatesMarksDataGridView.Rows.Count - 2].Cells[0].Value =
-                Convert.ToInt32(dataGridTable.Rows[CoordinatesMarksDataGridView.Rows.Count - 3].Cells[0].Value.ToString()) + 1;
+                Convert.ToInt32(mainCoordinatesTable.Rows[CoordinatesMarksDataGridView.Rows.Count - 3].Cells[0].Value.ToString()) + 1;
         }
 
         private void fillCalculatedValuesInCoordinatesTable()
@@ -760,32 +766,5 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 ResponseFunctionChart);
             }
         }
-                
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ObjectPictureBox_Click(object sender, EventArgs e)
-        {
-
-        }        
-
-        private void SecondLevelEstimationDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void tabPage2_Click(object sender, EventArgs e)
-        {
-
-        }  
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

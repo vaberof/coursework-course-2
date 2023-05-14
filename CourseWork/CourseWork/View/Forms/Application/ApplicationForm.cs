@@ -2,14 +2,16 @@
 using CourseWork.Handlers.Application.ToolStrip.Project;
 using CourseWork.Infra.Storage.Sqlite;
 using CourseWork.Infra.Storage.Sqlite.TechnogenicObject;
-using CourseWork.Service.Chart.FirstLevel;
-using CourseWork.Service.Chart.Impl;
+using CourseWork.Service.Calculation;
+using CourseWork.Service.Chart;
+using CourseWork.Service.Decomposition;
 using CourseWork.View.Forms.Application;
 using CourseWork.View.Forms.Decomposition;
 using CourseWork.View.Forms.Decomposition.FourthLevel;
 using CourseWork.View.Forms.Decomposition.SecondLevel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CourseWork
@@ -35,9 +37,10 @@ namespace CourseWork
         DecompositionService decompositionService;
         ChartService chartService;
 
-        private int epochCount;
-
-        public ApplicationForm(ProjectToolHandler projectToolHandler, ICalculationsService calculationsService)
+        private int nextEpochValue;
+        private int currentEpochCount; // Текущее количество эпох = количество заполненных строк в mainCoordinatesTable
+        private bool isOpenedProject;
+        public ApplicationForm(ProjectToolHandler projectToolHandler, ICalculationService calculationsService)
         {
             this.chartService = new ChartService();
             this.projectToolHandler = projectToolHandler;
@@ -47,19 +50,14 @@ namespace CourseWork
         
         private void ApplicationForm_Load(object sender, EventArgs e)
         {
-
+            disableFormUserInterface();
         }
-
-        private void toolStripDropDownButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-        
+                
         private void OpenProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                if (technogenicObjectStorage != null)
+                /*if (technogenicObjectStorage != null)
                 {
                     technogenicObjectStorage.CloseConnection();                    
                 }
@@ -68,42 +66,26 @@ namespace CourseWork
                 {
                     ObjectPictureBox.Image.Dispose();
                     ObjectPictureBox.Image = null;
-                }
+                }*/
 
-                // initialize all necessary objects
-                technogenicObject = projectToolHandler.OpenProject();
+                technogenicObject = projectToolHandler.OpenProject();                
+                isOpenedProject = true;
 
-                db = new Sqlite(projectToolHandler.SqliteFilePath);
-                technogenicObjectStorage = new TechnogenicObjectStorage(db);
-                technogenicObjectService = new TechnogenicObjectService(technogenicObjectStorage);
+                enableFormUserInterface();
 
-
-                // technogenicObjectStorage.CreateValuesTable(
-                // alpha, technogenicObject.MeasurementAccuracy, technogenicObject.StructuralBlocksCount, convertImageToBytes(
-                // projectToolHandler.PngFilePath), technogenicObject.StructuralBlocksCount);
-
+                initServiceAndStorage();                
 
                 technogenicObjectStorage.CreateEpochCountColumn();
+                technogenicObjectService.FillMainCoordinatesTable(dataGridViewTable);
 
-                technogenicObjectService.FillDataGridTable(dataGridViewTable);
+                nextEpochValue = Convert.ToInt32(
+                    dataGridViewTable.Rows[dataGridViewTable.RowCount - 2].Cells[0].Value.ToString()) + 1;
 
-                // после первоначальной прогрузки таблицы с новой колонкой Количество_эпох
-                // устанавливаю значение в колонке в бд == количество строчек в дата грид - 1
-                // и после каждого удаления 
-                
-                // надо проверять если уже 0 строчек, то надо просто epochCount 
-                // скорее всего нельзя удалить все эпохи..
+                technogenicObjectStorage.UpdateEpochCount(nextEpochValue);
 
-                epochCount = Convert.ToInt32(
-                    dataGridViewTable.Rows[dataGridViewTable.RowCount - 2].Cells[0].Value.ToString()
-                    );
-                
-                //MessageBox.Show("newEpochCount : " + epochCount);
-
-                technogenicObjectStorage.UpdateEpochCount(epochCount);
+                currentEpochCount = dataGridViewTable.Rows.Count - 1;
 
                 showObjectPicture(projectToolHandler.PngFilePath);
-
                 resizeDataGridTable();
 
                 AlphaTextBox.Text = "0,9";
@@ -114,17 +96,23 @@ namespace CourseWork
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }            
+            }              
+        }
+
+        private void initServiceAndStorage()
+        {
+            db = new Sqlite(projectToolHandler.SqliteFilePath);
+            technogenicObjectStorage = new TechnogenicObjectStorage(db);
+            technogenicObjectService = new TechnogenicObjectService(technogenicObjectStorage);
         }
 
         private void addEpochButton_Click(object sender, EventArgs e)
         {
-            technogenicObjectService.AddEpoch(dataGridViewTable);
-            technogenicObjectService.FillDataGridTable(dataGridViewTable);
+            technogenicObjectService.AddEpoch(dataGridViewTable, ref currentEpochCount);
+            technogenicObjectService.FillMainCoordinatesTable(dataGridViewTable);
             resizeDataGridTable();
         }
 
-        //TODO: добавить перерисовку датагрид
         private void deleteEpochButton_Click(object sender, EventArgs e)
         {
 
@@ -133,18 +121,16 @@ namespace CourseWork
             foreach (DataGridViewRow row in dataGridViewTable.SelectedRows)
             {
                 selectedRowIndexes.Add(row.Index);
-
-                //dataGridViewTable.Rows.Remove(row);
             }
 
-            technogenicObjectService.DeleteEpoches(dataGridViewTable, selectedRowIndexes);                
+            technogenicObjectService.DeleteEpoches(dataGridViewTable, selectedRowIndexes, ref currentEpochCount);                
             
             for (int i = 0; i < selectedRowIndexes.Count; i++)
             {
                 dataGridViewTable.Rows.RemoveAt(selectedRowIndexes[i]);
             }
 
-            technogenicObjectService.FillDataGridTable(dataGridViewTable);
+            technogenicObjectService.FillMainCoordinatesTable(dataGridViewTable);
             resizeDataGridTable();
         }
 
@@ -160,6 +146,26 @@ namespace CourseWork
         {
             ObjectPictureBox.Load(pngFilePath);
             ObjectPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
+        private void disableFormUserInterface()
+        {
+            ObjectToolStripDropDownButton.Enabled = false;
+            DecompositionToolStripDropDownButton.Enabled = false;
+            AlphaTextBox.Enabled = false;
+            EpsilonTextBox.Enabled = false;
+            AddEpochButton.Enabled = false;
+            DeleteEpochButton.Enabled = false;
+        }
+
+        private void enableFormUserInterface()
+        {
+            ObjectToolStripDropDownButton.Enabled = true;
+            DecompositionToolStripDropDownButton.Enabled = true;
+            AlphaTextBox.Enabled = true;
+            EpsilonTextBox.Enabled = true;
+            AddEpochButton.Enabled = true;
+            DeleteEpochButton.Enabled = true;
         }
 
         private void ObjectShowDescriptionToolStripMenuItem_MouseHover(object sender, EventArgs e)
@@ -194,11 +200,9 @@ namespace CourseWork
                     projectToolHandler.SaveArchive(archiveType);
 
                     technogenicObjectStorage.OpenConnection();
-                    //technogenicObjectStorage = new TechnogenicObjectStorage(sqlite);
-                    //technogenicObjectService = new TechnogenicObjectService(technogenicObjectStorage);
 
                     // TODO: вынести в функцию
-                    technogenicObjectService.FillDataGridTable(dataGridViewTable);
+                    technogenicObjectService.FillMainCoordinatesTable(dataGridViewTable);
                     showObjectPicture(projectToolHandler.PngFilePath);
 
                     resizeDataGridTable();
@@ -206,13 +210,75 @@ namespace CourseWork
                     AlphaTextBox.Text = "0,9";
                     EpsilonTextBox.Text = Convert.ToString(technogenicObject.MeasurementAccuracy);
 
-                    epochCount = dataGridViewTable.RowCount - 1;
-                    MessageBox.Show("epochCount: " + epochCount);
-
                     setObjectDescription();
                 }
             }
+        }
 
+        private void FirstLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FirstLevelForm firstLevelForm = new FirstLevelForm(
+                technogenicObject.MeasurementAccuracy,
+                Convert.ToDouble(AlphaTextBox.Text),
+                decompositionService,
+                chartService,
+                dataGridViewTable,
+                technogenicObjectService.GetDataTable());
+
+            firstLevelForm.Show();
+        }
+
+        private void SecondLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SecondLevelForm secondLevelForm = new SecondLevelForm(
+                decompositionService,
+                chartService,
+                technogenicObject.StructuralBlocksCount,
+                technogenicObject.GeodeticMarksCount,
+                technogenicObject.MeasurementAccuracy,
+                Convert.ToDouble(AlphaTextBox.Text),
+                projectToolHandler.PngFilePath,
+                dataGridViewTable);
+
+            secondLevelForm.Show();
+        }
+
+        private void FourthLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FourthLevelForm fourthLevelForm = new FourthLevelForm(
+                decompositionService,
+                chartService,
+                technogenicObject.GeodeticMarksCount,
+                Convert.ToDouble(AlphaTextBox.Text),
+                dataGridViewTable);
+
+            fourthLevelForm.Show();
+        }
+
+        private void AlphaTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == ',' && (sender as TextBox).Text.Contains(','))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void EpsilonTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == ',' && (sender as TextBox).Text.Contains(','))
+            {
+                e.Handled = true;
+            }
         }
 
         // private void setupInitialObjectValues() {...}
@@ -235,108 +301,11 @@ namespace CourseWork
 
             ObjectDesciptionLabel.Text = objectDescpiption;
         }
-
-        private void dataGridViewTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-               
-
-        private void toolStripDropDownButton1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         
 
         private void ApplicationForm_FormClosing(object sender, FormClosingEventArgs e)
         {
 
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void EpsilonLabel_Click(object sender, EventArgs e)
-        {
-
         }        
-
-        private void AlphaLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void TopMenuToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FirstLevelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FirstLevelForm firstLevelForm = new FirstLevelForm(
-                technogenicObject.MeasurementAccuracy,
-                Convert.ToDouble(AlphaTextBox.Text),
-                decompositionService,
-                chartService,
-                dataGridViewTable, 
-                technogenicObjectService.GetDataTable());
-
-            firstLevelForm.Show();
-        }
-
-        private void SecondLevelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SecondLevelForm secondLevelForm = new SecondLevelForm(
-                decompositionService,
-                chartService,
-                technogenicObject.StructuralBlocksCount,
-                technogenicObject.GeodeticMarksCount,
-                technogenicObject.MeasurementAccuracy,
-                Convert.ToDouble(AlphaTextBox.Text),
-                dataGridViewTable);
-
-            secondLevelForm.Show();
-        }
-
-        private void ObjectToolStripDropDownButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FourthLevelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FourthLevelForm fourthLevelForm = new FourthLevelForm(
-                decompositionService,
-                chartService,
-                technogenicObject.GeodeticMarksCount,
-                Convert.ToDouble(AlphaTextBox.Text),
-                dataGridViewTable);
-
-            fourthLevelForm.Show();
-        }
-
     }
 }

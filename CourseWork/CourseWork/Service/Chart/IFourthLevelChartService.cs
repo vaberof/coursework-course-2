@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseWork.Service
+namespace CourseWork.Service.Chart
 {
     public interface IFourthLevelChartService
     {

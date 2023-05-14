@@ -1,6 +1,4 @@
-﻿using CourseWork.Domain.TechnogenicObject;
-using CourseWork.Domain.TechnogenicObject.Impl;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,15 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
-using CourseWork.Service.Decomposition;
+using CourseWork.Service.Calculation;
 
-namespace CourseWork.Service.Chart.Impl
+namespace CourseWork.Service.Decomposition
 {
     public class DecompositionService : IFirstLevelDecompositionService, ISecondLevelDecompositionService, IFourthLevelDecompositionService
     {
-        ICalculationsService calculationsService;
+        ICalculationService calculationsService;
 
-        public DecompositionService(ICalculationsService calculationsService)
+        public DecompositionService(ICalculationService calculationsService)
         {
             this.calculationsService = calculationsService;
         }
@@ -24,7 +22,7 @@ namespace CourseWork.Service.Chart.Impl
         public void CalculateValuesInCoordinatesTable(
             ref List<List<double>> calculatedValues,
             ref Dictionary<string, List<double>> calculatedAlphaAndMValues,
-            DataGridView dataGridTable,
+            DataGridView mainCoordinatesTable,
             DataTable dataTable,
             double epsilon,
             double alpha)
@@ -32,22 +30,22 @@ namespace CourseWork.Service.Chart.Impl
             DataGridView lowerBoundTable = calculationsService.CalculateLowerOrUpperBound(
             dataTable,
             epsilon,
-            dataGridTable,
+            mainCoordinatesTable,
                 "-");
 
             DataGridView upperBoundTable = calculationsService.CalculateLowerOrUpperBound(
                 dataTable,
                 epsilon,
-                dataGridTable,
+                mainCoordinatesTable,
                 "+");
 
             // ЗНАЧЕНИЯ M ДЛЯ ОСНОВНОЙ ТАБЛИЦЫ, НИЖНЕЙ И ВЕРХНЕЙ ГРАНИЦ
-            List<double> MValues = calculationsService.CalculateMValues(dataGridTable);
+            List<double> MValues = calculationsService.CalculateMValues(mainCoordinatesTable);
             List<double> lowerBoundMValues = calculationsService.CalculateMValues(lowerBoundTable);
             List<double> upperBoundMValues = calculationsService.CalculateMValues(upperBoundTable);
 
             // ЗНАЧЕНИЯ АЛЬФЫ ДЛЯ ОСНОВНОЙ ТАБЛИЦЫ, НИЖНЕЙ И ВЕРХНЕЙ ГРАНИЦ
-            List<double> alphaValues = calculationsService.CalculateAlphaValues(dataGridTable, MValues);
+            List<double> alphaValues = calculationsService.CalculateAlphaValues(mainCoordinatesTable, MValues);
             List<double> lowerBoundAlphaValues = calculationsService.CalculateAlphaValues(lowerBoundTable, lowerBoundMValues);
             List<double> upperBoundAlphaValues = calculationsService.CalculateAlphaValues(upperBoundTable, upperBoundMValues);
 
@@ -108,29 +106,29 @@ namespace CourseWork.Service.Chart.Impl
             ref List<List<double>> calculatedValues,
             ref Dictionary<string, List<double>> calculatedAlphaAndMValues,
             List<string> marks,
-            DataGridView dataGridTable,
+            DataGridView mainCoordinatesTable,
             double epsilon,
             double alpha)
         {
             DataGridView lowerBoundTable = calculationsService.CalculateLowerOrUpperBoundWithMarks(
-            dataGridTable,
+            mainCoordinatesTable,
             marks,
             epsilon,
             "-");
 
             DataGridView upperBoundTable = calculationsService.CalculateLowerOrUpperBoundWithMarks(
-                dataGridTable,
+                mainCoordinatesTable,
                 marks,
                 epsilon,
                 "+");
 
             // ЗНАЧЕНИЯ M ДЛЯ ОСНОВНОЙ ТАБЛИЦЫ, НИЖНЕЙ И ВЕРХНЕЙ ГРАНИЦ
-            List<double> MValues = calculationsService.CalculateMValuesWithMarks(dataGridTable, marks);
+            List<double> MValues = calculationsService.CalculateMValuesWithMarks(mainCoordinatesTable, marks);
             List<double> lowerBoundMValues = calculationsService.CalculateMValuesWithMarks(lowerBoundTable, marks);
             List<double> upperBoundMValues = calculationsService.CalculateMValuesWithMarks(upperBoundTable, marks);
 
             // ЗНАЧЕНИЯ АЛЬФЫ ДЛЯ ОСНОВНОЙ ТАБЛИЦЫ, НИЖНЕЙ И ВЕРХНЕЙ ГРАНИЦ
-            List<double> alphaValues = calculationsService.CalculateAlphaValuesWithMarks(dataGridTable, MValues, marks);
+            List<double> alphaValues = calculationsService.CalculateAlphaValuesWithMarks(mainCoordinatesTable, MValues, marks);
             List<double> lowerBoundAlphaValues = calculationsService.CalculateAlphaValuesWithMarks(lowerBoundTable, lowerBoundMValues, marks);
             List<double> upperBoundAlphaValues = calculationsService.CalculateAlphaValuesWithMarks(upperBoundTable, upperBoundMValues, marks);
 
@@ -257,7 +255,6 @@ namespace CourseWork.Service.Chart.Impl
             ref Dictionary<string, List<double>> calculatedAlphaAndMValues,
             DataGridView dataGridView)
         {
-            //MessageBox.Show("кол-во строк:" + dataGridView.Rows.Count);
             // в колонке 6 отображается значение Состояния объекта
             for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
             {

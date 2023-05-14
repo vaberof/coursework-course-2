@@ -1,6 +1,6 @@
 ﻿using CourseWork.Domain.TechnogenicObject;
-using CourseWork.Domain.TechnogenicObject.Impl;
 using CourseWork.Handlers.Application.ToolStrip.Project;
+using CourseWork.Service.Calculation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace CourseWork
             // initialize handlers for forms
             ProjectToolHandler projectToolHandler = new ProjectToolHandler();
 
-            ICalculationsService calculationsService = new CalculationsService();
+            ICalculationService calculationsService = new CalculationService();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

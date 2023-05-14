@@ -6,30 +6,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CourseWork.Domain.TechnogenicObject.Impl
+namespace CourseWork.Service.Calculation
 {
-    internal class CalculationsService : ICalculationsService
+    internal class CalculationService : ICalculationService
     {
-        public List<double> CalculateMValues(DataGridView dataGridTable)
+        public List<double> CalculateMValues(DataGridView mainCoordinatesTable)
         {
             List<double> MValues = new List<double>();
             int startColumn = 0;
             int endRow = 0;
 
-            if (dataGridTable.Columns[0].Name.Equals("Эпоха"))
+            if (mainCoordinatesTable.Columns[0].Name.Equals("Эпоха"))
             {
-                endRow = dataGridTable.RowCount - 1;
+                endRow = mainCoordinatesTable.RowCount - 1;
                 startColumn = 1;
             }
-            else endRow = dataGridTable.RowCount - 2;
+            else endRow = mainCoordinatesTable.RowCount - 2;
 
             for (int i = 0; i < endRow; i++)
             {
                 double MSquareSum = 0;
 
-                for (int j = startColumn; j < dataGridTable.ColumnCount; j++)
+                for (int j = startColumn; j < mainCoordinatesTable.ColumnCount; j++)
                 {
-                    MSquareSum += Math.Pow(Convert.ToDouble(dataGridTable.Rows[i].Cells[j].Value), 2);
+                    MSquareSum += Math.Pow(Convert.ToDouble(mainCoordinatesTable.Rows[i].Cells[j].Value), 2);
                 }
 
                 MValues.Add(Math.Sqrt(MSquareSum));
@@ -38,7 +38,7 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
             return MValues;
         }
 
-        public List<double> CalculateAlphaValues(DataGridView dataGridTable, List<double> MValues)
+        public List<double> CalculateAlphaValues(DataGridView mainCoordinatesTable, List<double> MValues)
         {
             List<double> alphaValues = new List<double>();
             alphaValues.Add(0);
@@ -51,21 +51,21 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
             int endRow = 0;
             int startColumn = 0;
 
-            if (dataGridTable.Columns[0].Name.Equals("Эпоха"))
+            if (mainCoordinatesTable.Columns[0].Name.Equals("Эпоха"))
             {
                 startColumn = 1;
-                endRow = dataGridTable.RowCount - 2;
+                endRow = mainCoordinatesTable.RowCount - 2;
             }
-            else endRow = dataGridTable.RowCount - 3;
+            else endRow = mainCoordinatesTable.RowCount - 3;
 
             for (int i = 0; i < endRow; i++)
             {
                 productsSum = 0;
 
-                for (int j = startColumn; j < dataGridTable.ColumnCount; j++)
+                for (int j = startColumn; j < mainCoordinatesTable.ColumnCount; j++)
                 {
-                    firstRowValue = Convert.ToDouble(dataGridTable.Rows[0].Cells[j].Value);
-                    currentRowValue = Convert.ToDouble(dataGridTable.Rows[i + 1].Cells[j].Value);
+                    firstRowValue = Convert.ToDouble(mainCoordinatesTable.Rows[0].Cells[j].Value);
+                    currentRowValue = Convert.ToDouble(mainCoordinatesTable.Rows[i + 1].Cells[j].Value);
                     productsSum += firstRowValue * currentRowValue;
                 }
 
@@ -81,19 +81,19 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
         }
 
         // TODO: переименовать MValues -> vectorsMValues
-        public List<double> CalculateMValuesWithMarks(DataGridView dataGridTable, List<string> marks)
+        public List<double> CalculateMValuesWithMarks(DataGridView mainCoordinatesTable, List<string> marks)
         {
             List<double> MValues = new List<double>();
 
-            for (int i = 0; i < dataGridTable.RowCount - 1; i++)
+            for (int i = 0; i < mainCoordinatesTable.RowCount - 1; i++)
             {
                 double MSquareSum = 0;
 
-                foreach (DataGridViewColumn col in dataGridTable.Columns)
+                foreach (DataGridViewColumn col in mainCoordinatesTable.Columns)
                 {
                     if (marks.Contains(col.Name))
                     {
-                        MSquareSum += Math.Pow(Convert.ToDouble(dataGridTable.Rows[i].Cells[col.Name].Value), 2);
+                        MSquareSum += Math.Pow(Convert.ToDouble(mainCoordinatesTable.Rows[i].Cells[col.Name].Value), 2);
                     }
                 }
                 MValues.Add(Math.Sqrt(MSquareSum));
@@ -101,7 +101,7 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
             return MValues;
         }
 
-        public List<double> CalculateAlphaValuesWithMarks(DataGridView dataGridTable, List<double> MValues, List<string> marks)
+        public List<double> CalculateAlphaValuesWithMarks(DataGridView mainCoordinatesTable, List<double> MValues, List<string> marks)
         {
             List<double> alphaValues = new List<double>();
             alphaValues.Add(0);
@@ -111,15 +111,15 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
             double firstRowValue = 0;
             double currentRowValue = 0;
 
-            for (int i = 0; i < dataGridTable.Rows.Count - 2; i++)
+            for (int i = 0; i < mainCoordinatesTable.Rows.Count - 2; i++)
             {
                 productsSum = 0;
-                foreach (DataGridViewColumn col in dataGridTable.Columns)
+                foreach (DataGridViewColumn col in mainCoordinatesTable.Columns)
                 {
                     if (marks.Contains(col.Name))
                     {
-                        firstRowValue = Convert.ToDouble(dataGridTable.Rows[0].Cells[col.Name].Value);
-                        currentRowValue = Convert.ToDouble(dataGridTable.Rows[i + 1].Cells[col.Name].Value);
+                        firstRowValue = Convert.ToDouble(mainCoordinatesTable.Rows[0].Cells[col.Name].Value);
+                        currentRowValue = Convert.ToDouble(mainCoordinatesTable.Rows[i + 1].Cells[col.Name].Value);
                         productsSum += firstRowValue * currentRowValue;
                     }
                 }
@@ -134,30 +134,30 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
             return alphaValues;
         }
 
-        public DataGridView CalculateLowerOrUpperBound(DataTable dataTable, double epsilon, DataGridView dataGridTable, string arithmeticOperator)
+        public DataGridView CalculateLowerOrUpperBound(DataTable dataTable, double epsilon, DataGridView mainCoordinatesTable, string arithmeticOperator)
         {
             DataGridView table = fillDataGridView(dataTable);
 
-            for (int i = 0; i < dataGridTable.Rows.Count; i++)
+            for (int i = 0; i < mainCoordinatesTable.Rows.Count; i++)
             {
-                for (int j = 1; j < dataGridTable.ColumnCount; j++)
+                for (int j = 1; j < mainCoordinatesTable.ColumnCount; j++)
                 {
                     if (arithmeticOperator.Equals("-"))
                     {
-                        table.Rows[i].Cells[j].Value = Convert.ToDouble(dataGridTable.Rows[i].Cells[j].Value) - epsilon;
+                        table.Rows[i].Cells[j].Value = Convert.ToDouble(mainCoordinatesTable.Rows[i].Cells[j].Value) - epsilon;
                     }
                     else
                     {
-                        table.Rows[i].Cells[j].Value = Convert.ToDouble(dataGridTable.Rows[i].Cells[j].Value) + epsilon;
+                        table.Rows[i].Cells[j].Value = Convert.ToDouble(mainCoordinatesTable.Rows[i].Cells[j].Value) + epsilon;
                     }
                 }
             }
             return table;
         }
 
-        public DataGridView CalculateLowerOrUpperBoundWithMarks(DataGridView dataGridTable, List<string> marks, double epsilon, string arithmeticOperator)
+        public DataGridView CalculateLowerOrUpperBoundWithMarks(DataGridView mainCoordinatesTable, List<string> marks, double epsilon, string arithmeticOperator)
         {
-            //MessageBox.Show(dataGridTable.Rows.Count.ToString()) ;
+            //MessageBox.Show(mainCoordinatesTable.Rows.Count.ToString()) ;
             DataGridView dataGridView = new DataGridView();
 
             for (int i = 0; i < marks.Count; i++)
@@ -166,30 +166,26 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
                 dataGridView.Columns[i].Name = marks[i];
             }
 
-            for (int i = 0; i < dataGridTable.Rows.Count - 1; i++)
+            for (int i = 0; i < mainCoordinatesTable.Rows.Count - 1; i++)
             {
                 dataGridView.Rows.Add();
 
-                foreach (DataGridViewColumn col in dataGridTable.Columns)
+                foreach (DataGridViewColumn col in mainCoordinatesTable.Columns)
                 {
                     if (marks.Contains(col.Name))
                     {
                         if (arithmeticOperator.Equals("-"))
                         {
-                            dataGridView.Rows[i].Cells[col.Name].Value = Convert.ToDouble(dataGridTable.Rows[i].Cells[col.Name].Value) - epsilon;
-                            //MessageBox.Show("значение в строке:" + dataGridView.Rows[i].Cells[col.Name].Value.ToString());
+                            dataGridView.Rows[i].Cells[col.Name].Value = Convert.ToDouble(mainCoordinatesTable.Rows[i].Cells[col.Name].Value) - epsilon;
                         }
                         else
-                        {   // MessageBox.Show("значение в строке:" + dataGridView.Rows[i].Cells[col.Name].Value.ToString());
-                            dataGridView.Rows[i].Cells[col.Name].Value = Convert.ToDouble(dataGridTable.Rows[i].Cells[col.Name].Value) + epsilon;
+                        { 
+                            dataGridView.Rows[i].Cells[col.Name].Value = Convert.ToDouble(mainCoordinatesTable.Rows[i].Cells[col.Name].Value) + epsilon;
                         }
 
                     }
                 }
             }
-
-            MessageBox.Show("datagridView: "+dataGridView.Rows.Count.ToString());
-            MessageBox.Show("datagridTable: " + dataGridTable.Rows.Count.ToString());
             return dataGridView;
         }
 

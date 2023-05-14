@@ -1,5 +1,5 @@
 ﻿using CourseWork.Service;
-using CourseWork.Service.Chart.FirstLevel;
+using CourseWork.Service.Chart;
 using CourseWork.Service.Decomposition;
 using System;
 using System.Collections.Generic;
@@ -22,21 +22,20 @@ namespace CourseWork.View.Forms.Decomposition.FourthLevel
         private int marksCount;
         private double alpha;
 
-        private DataGridView dataGridTable;
-        
+        private DataGridView mainCoordinatesTable;        
 
         public FourthLevelForm(
             IFourthLevelDecompositionService decompositionService, 
             IFourthLevelChartService chartService, 
             int marksCount,
             double aplha,
-            DataGridView dataGridTable)
+            DataGridView mainCoordinatesTable)
         {            
             this.decompositionService = decompositionService;
             this.chartService = chartService;
             this.marksCount = marksCount;
             this.alpha = aplha;
-            this.dataGridTable = dataGridTable;
+            this.mainCoordinatesTable = mainCoordinatesTable;
 
             InitializeComponent();
         }
@@ -99,9 +98,9 @@ namespace CourseWork.View.Forms.Decomposition.FourthLevel
         {
             List<double> marksValues = new List<double>();
 
-            for (int i = 0; i < dataGridTable.Rows.Count - 1; i++)
+            for (int i = 0; i < mainCoordinatesTable.Rows.Count - 1; i++)
             {
-                marksValues.Add(Convert.ToDouble(dataGridTable.Rows[i].Cells[mark].Value));
+                marksValues.Add(Convert.ToDouble(mainCoordinatesTable.Rows[i].Cells[mark].Value));
             }
 
             return marksValues;
@@ -116,9 +115,9 @@ namespace CourseWork.View.Forms.Decomposition.FourthLevel
         {
             List<double> epoches = new List<double>();
 
-            for (int i = 0; i < dataGridTable.Rows.Count - 1; i++)
+            for (int i = 0; i < mainCoordinatesTable.Rows.Count - 1; i++)
             {
-                epoches.Add(Convert.ToInt32(dataGridTable.Rows[i].Cells[0].Value));
+                epoches.Add(Convert.ToInt32(mainCoordinatesTable.Rows[i].Cells[0].Value));
             }
 
             return epoches;

@@ -238,7 +238,7 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Ошибка во время чтения текстовоого файла: " + ex.Message);
+                MessageBox.Show("Ошибка во время чтения текстового файла: " + ex.Message);
             }
 
             return null;

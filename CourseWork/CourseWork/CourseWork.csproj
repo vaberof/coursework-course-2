@@ -97,21 +97,21 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\TechnogenicObject\ICalculationsService.cs" />
-    <Compile Include="Domain\TechnogenicObject\Impl\CalculationsService.cs" />
+    <Compile Include="Service\Calculation\ICalculationService.cs" />
+    <Compile Include="Service\Calculation\CalculationService.cs" />
     <Compile Include="Domain\TechnogenicObject\ITechnogenicObjectService.cs" />
     <Compile Include="Domain\TechnogenicObject\ITechogenicObjectStorage.cs" />
-    <Compile Include="Domain\TechnogenicObject\Impl\TechnogenicObject.cs" />
-    <Compile Include="Domain\TechnogenicObject\Impl\TechnogenicObjectService.cs" />
+    <Compile Include="Domain\TechnogenicObject\TechnogenicObject.cs" />
+    <Compile Include="Domain\TechnogenicObject\TechnogenicObjectService.cs" />
     <Compile Include="Handlers\Application\ToolStrip\Project\ProjectToolHandler.cs" />
     <Compile Include="Handlers\Application\TopPanel\Buttons\Close\CloseButtonHandler.cs" />
     <Compile Include="Infra\Storage\Sqlite\Sqlite.cs" />
     <Compile Include="Infra\Storage\Sqlite\TechnogenicObject\TechnogenicObjectStorage.cs" />
     <Compile Include="Service\Chart\IFirstLevelChartService.cs" />
-    <Compile Include="Service\Chart\Impl\ChartService.cs" />
+    <Compile Include="Service\Chart\ChartService.cs" />
     <Compile Include="Service\Decomposition\IFirstLevelDecompositionService.cs" />
     <Compile Include="Service\Decomposition\IFourthLevelDecompositionService.cs" />
-    <Compile Include="Service\Decomposition\Impl\DecompositionService.cs" />
+    <Compile Include="Service\Decomposition\DecompositionService.cs" />
     <Compile Include="Service\Chart\ISecondLevelChartService.cs" />
     <Compile Include="Service\Decomposition\ISecondLevelDecompositionService.cs" />
     <Compile Include="Service\Chart\IFourthLevelChartService.cs" />

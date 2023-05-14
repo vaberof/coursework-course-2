@@ -83,7 +83,7 @@
             this.Controls.Add(this.MarksCheckedListBox);
             this.Name = "FourthLevelForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FourthLevelForm";
+            this.Text = "Четвертый уровень";
             this.Load += new System.EventHandler(this.FourthLevelForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ResponseFunctionChart)).EndInit();
             this.ResumeLayout(false);

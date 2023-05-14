@@ -9,14 +9,12 @@ namespace CourseWork.Infra.Storage.Sqlite
 {
     public class Sqlite
     {
-        public SQLiteConnection Connection;
+        public SQLiteConnection connection;
 
         public Sqlite(string sqliteFilePath)
         {
-            Connection = new SQLiteConnection("Data Source=" + sqliteFilePath + ";Version=3;");
-            Connection.Open();
-            SQLiteCommand command = new SQLiteCommand();
-            command.Connection = Connection;
+            connection = new SQLiteConnection("Data Source=" + sqliteFilePath + ";Version=3;");
+            connection.Open();
         } 
     }
 }

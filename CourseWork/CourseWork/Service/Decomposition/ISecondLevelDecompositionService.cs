@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CourseWork.Service.Chart
+namespace CourseWork.Service.Decomposition
 {
     public interface ISecondLevelDecompositionService
     {
@@ -14,7 +14,7 @@ namespace CourseWork.Service.Chart
             ref List<List<double>> calculatedValues,
             ref Dictionary<string, List<double>> calculatedAlphaAndMValues,
             List<string> marks,
-            DataGridView dataGridTable,
+            DataGridView mainCoordinatesTable,
             double epsilon,
             double alpha);
 

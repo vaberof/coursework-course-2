@@ -189,7 +189,6 @@
             this.ObjectPictureBox.Size = new System.Drawing.Size(893, 569);
             this.ObjectPictureBox.TabIndex = 14;
             this.ObjectPictureBox.TabStop = false;
-            this.ObjectPictureBox.Click += new System.EventHandler(this.ObjectPictureBox_Click);
             // 
             // label4
             // 
@@ -201,7 +200,6 @@
             this.label4.Size = new System.Drawing.Size(131, 36);
             this.label4.TabIndex = 13;
             this.label4.Text = "Распределенные точки блока";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -260,7 +258,6 @@
             this.CalculationsAndChartsTabPage.TabIndex = 1;
             this.CalculationsAndChartsTabPage.Text = "Расчеты  и графики";
             this.CalculationsAndChartsTabPage.UseVisualStyleBackColor = true;
-            this.CalculationsAndChartsTabPage.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // label1
             // 
@@ -272,12 +269,12 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Выберите блок";
             // 
-            // ChooseBlockCalculationsAndGraphsComboBox
+            // ChooseBlockCalculationsAndChartsComboBox
             // 
             this.ChooseBlockCalculationsAndChartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ChooseBlockCalculationsAndChartsComboBox.FormattingEnabled = true;
             this.ChooseBlockCalculationsAndChartsComboBox.Location = new System.Drawing.Point(181, 17);
-            this.ChooseBlockCalculationsAndChartsComboBox.Name = "ChooseBlockCalculationsAndGraphsComboBox";
+            this.ChooseBlockCalculationsAndChartsComboBox.Name = "ChooseBlockCalculationsAndChartsComboBox";
             this.ChooseBlockCalculationsAndChartsComboBox.Size = new System.Drawing.Size(286, 24);
             this.ChooseBlockCalculationsAndChartsComboBox.TabIndex = 7;
             this.ChooseBlockCalculationsAndChartsComboBox.SelectedIndexChanged += new System.EventHandler(this.ChooseBlockCalculationsAndGraphsComboBox_SelectedIndexChanged);
@@ -328,6 +325,9 @@
             // 
             // MChartClearButton
             // 
+            this.MChartClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.MChartClearButton.Location = new System.Drawing.Point(275, 55);
             this.MChartClearButton.Name = "MChartClearButton";
             this.MChartClearButton.Size = new System.Drawing.Size(117, 41);
@@ -445,7 +445,6 @@
             this.AlphaChartGroupBox.TabIndex = 4;
             this.AlphaChartGroupBox.TabStop = false;
             this.AlphaChartGroupBox.Text = "Параметры графиков";
-            this.AlphaChartGroupBox.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // AlphaChartClearButton
             // 
@@ -661,9 +660,9 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.EstimationMarksDataGridView);
-            this.groupBox1.Location = new System.Drawing.Point(4, 390);
+            this.groupBox1.Location = new System.Drawing.Point(4, 387);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(485, 342);
+            this.groupBox1.Size = new System.Drawing.Size(485, 345);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Оценка состояния объекта";
@@ -676,9 +675,8 @@
             this.EstimationMarksDataGridView.Name = "EstimationMarksDataGridView";
             this.EstimationMarksDataGridView.RowHeadersWidth = 51;
             this.EstimationMarksDataGridView.RowTemplate.Height = 24;
-            this.EstimationMarksDataGridView.Size = new System.Drawing.Size(479, 321);
+            this.EstimationMarksDataGridView.Size = new System.Drawing.Size(479, 324);
             this.EstimationMarksDataGridView.TabIndex = 0;
-            this.EstimationMarksDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SecondLevelEstimationDataGridView_CellContentClick);
             // 
             // SecondLevelCoordinatesGroupBox
             // 

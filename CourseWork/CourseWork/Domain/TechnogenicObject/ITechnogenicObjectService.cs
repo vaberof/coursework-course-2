@@ -10,9 +10,9 @@ namespace CourseWork.Domain.TechnogenicObject
 {
     public interface ITechnogenicObjectService
     {
-        void FillDataGridTable(DataGridView dataGridTable);
-        void AddEpoch(DataGridView dataGridTable);
-        void DeleteEpoches(DataGridView dataGridTable, List<int> selectedRowsIndexes);
+        void FillMainCoordinatesTable(DataGridView mainCoordinatesTable);
+        void AddEpoch(DataGridView mainCoordinatesTable, ref int currentEpochCount);
+        void DeleteEpoches(DataGridView mainCoordinatesTable, List<int> selectedRowsIndexes, ref int currentEpochCount); 
         DataTable GetDataTable();
     }
 }

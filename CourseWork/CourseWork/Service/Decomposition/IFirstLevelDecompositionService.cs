@@ -6,14 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CourseWork.Service.Chart
+namespace CourseWork.Service.Decomposition
 {
     public interface IFirstLevelDecompositionService
     {
         void CalculateValuesInCoordinatesTable(
             ref List<List<double>> calculatedValues,
             ref Dictionary<string, List<double>> calculatedAlphaAndMValues,
-            DataGridView dataGridTable,
+            DataGridView mainCoordinatesTable,
             DataTable dataTable,
             double epsilon,
             double alpha);
