@@ -94,7 +94,7 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
 
             adapter.Fill(dataTable);
 
-            // TODO: count - 1 потому что послендяя колонка "количество эпох"
+            // count - 1 потому что послендяя колонка "количество эпох"
             for (int i = 1; i < dataTable.Columns.Count - 1; i++)
             {
                 string replaceCommosToDots = "UPDATE [" + getTableName() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";

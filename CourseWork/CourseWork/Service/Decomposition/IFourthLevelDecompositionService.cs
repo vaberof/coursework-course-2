@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 namespace CourseWork.Service.Decomposition
 {
-    // TODO: все методы переименовать в camelCase
     public interface IFourthLevelDecompositionService
     {
         void FillMarksInCheckedListBox(int marksCount, CheckedListBox checkedListBox);
