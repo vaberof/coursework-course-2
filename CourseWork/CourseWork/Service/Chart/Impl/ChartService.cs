@@ -4,7 +4,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CourseWork.Service.Chart.FirstLevel
 {
-    internal class ChartService : IFirstLevelChartService, ISecondLevelChartService
+    internal class ChartService : IFirstLevelChartService, ISecondLevelChartService, IFourthLevelChartService
     {
         public void AddXYLine(string serieName, List<double> xValues, List<double> yValues, System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
@@ -63,6 +63,16 @@ namespace CourseWork.Service.Chart.FirstLevel
         {
             chart.Series[serieName].Points.Clear();
             chart.Series.Remove(chart.Series[serieName]);
+        }
+
+        public void ClearChart(System.Windows.Forms.DataVisualization.Charting.Chart chart)
+        {
+            foreach (var series in chart.Series)
+            {
+                series.Points.Clear();
+            }
+
+            chart.Series.Clear();
         }
     }
 }

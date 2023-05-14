@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            this.SecondLevelTabControl = new System.Windows.Forms.TabControl();
+            this.DistributeMarksTabPage = new System.Windows.Forms.TabPage();
             this.NeedToDistributeLabel = new System.Windows.Forms.Label();
-            this.SecondLevelDeleteMarkButton = new System.Windows.Forms.Button();
-            this.SecondLevelAddMarkButton = new System.Windows.Forms.Button();
+            this.DeleteMarkButton = new System.Windows.Forms.Button();
+            this.AddMarkButton = new System.Windows.Forms.Button();
             this.DistributedMarksListBox = new System.Windows.Forms.ListBox();
             this.ObjectPictureBox = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -46,94 +46,94 @@
             this.MarksListBox = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.ChooseBlockComboBox = new System.Windows.Forms.ComboBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.CalculationsAndChartsTabPage = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.ChooseBlockCalculationsAndGraphsComboBox = new System.Windows.Forms.ComboBox();
+            this.ChooseBlockCalculationsAndChartsComboBox = new System.Windows.Forms.ComboBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.MChartGroupBox = new System.Windows.Forms.GroupBox();
+            this.MChartClearButton = new System.Windows.Forms.Button();
             this.PredictedUpperBoundMCheckBox = new System.Windows.Forms.CheckBox();
             this.PredictedMCheckBox = new System.Windows.Forms.CheckBox();
             this.PredictedLowerBoundMCheckBox = new System.Windows.Forms.CheckBox();
             this.MCheckBox = new System.Windows.Forms.CheckBox();
             this.UpperBoundMCheckBox = new System.Windows.Forms.CheckBox();
             this.LowerBoundMCheckBox = new System.Windows.Forms.CheckBox();
-            this.SecondLevelMChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.MChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.AlphaChartGroupBox = new System.Windows.Forms.GroupBox();
+            this.AlphaChartClearButton = new System.Windows.Forms.Button();
             this.PredictedUpperAlphaCheckBox = new System.Windows.Forms.CheckBox();
             this.PredictedAlphaCheckBox = new System.Windows.Forms.CheckBox();
             this.PredictedLowerBoundAlphaCheckBox = new System.Windows.Forms.CheckBox();
             this.AlphaCheckBox = new System.Windows.Forms.CheckBox();
             this.UpperBoundAlphaCheckBox = new System.Windows.Forms.CheckBox();
             this.LowerBoundAlphaCheckBox = new System.Windows.Forms.CheckBox();
-            this.SecondLevelAlphaChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.AlphaChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ResponseFunctionGroupBox = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.SecondLevelResponseFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ResponseFunctionChartClearButton = new System.Windows.Forms.Button();
+            this.ResponseFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.SecondLevelEstimationMarksDataGridView = new System.Windows.Forms.DataGridView();
+            this.EstimationMarksDataGridView = new System.Windows.Forms.DataGridView();
             this.SecondLevelCoordinatesGroupBox = new System.Windows.Forms.GroupBox();
-            this.SecondLevelCoordinatesMarksDataGridView = new System.Windows.Forms.DataGridView();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.CoordinatesMarksDataGridView = new System.Windows.Forms.DataGridView();
+            this.SecondLevelTabControl.SuspendLayout();
+            this.DistributeMarksTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ObjectPictureBox)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.CalculationsAndChartsTabPage.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelMChart)).BeginInit();
+            this.MChartGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MChart)).BeginInit();
             this.tabPage4.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelAlphaChart)).BeginInit();
+            this.AlphaChartGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AlphaChart)).BeginInit();
             this.tabPage5.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelResponseFunctionChart)).BeginInit();
+            this.ResponseFunctionGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResponseFunctionChart)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelEstimationMarksDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EstimationMarksDataGridView)).BeginInit();
             this.SecondLevelCoordinatesGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelCoordinatesMarksDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CoordinatesMarksDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // SecondLevelTabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1417, 769);
-            this.tabControl1.TabIndex = 0;
+            this.SecondLevelTabControl.Controls.Add(this.DistributeMarksTabPage);
+            this.SecondLevelTabControl.Controls.Add(this.CalculationsAndChartsTabPage);
+            this.SecondLevelTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SecondLevelTabControl.Location = new System.Drawing.Point(0, 0);
+            this.SecondLevelTabControl.Name = "SecondLevelTabControl";
+            this.SecondLevelTabControl.SelectedIndex = 0;
+            this.SecondLevelTabControl.Size = new System.Drawing.Size(1417, 769);
+            this.SecondLevelTabControl.TabIndex = 0;
             // 
-            // tabPage1
+            // DistributeMarksTabPage
             // 
-            this.tabPage1.Controls.Add(this.NeedToDistributeLabel);
-            this.tabPage1.Controls.Add(this.SecondLevelDeleteMarkButton);
-            this.tabPage1.Controls.Add(this.SecondLevelAddMarkButton);
-            this.tabPage1.Controls.Add(this.DistributedMarksListBox);
-            this.tabPage1.Controls.Add(this.ObjectPictureBox);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.MarksListBox);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.ChooseBlockComboBox);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1409, 740);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Распределение марок по блокам";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.DistributeMarksTabPage.Controls.Add(this.NeedToDistributeLabel);
+            this.DistributeMarksTabPage.Controls.Add(this.DeleteMarkButton);
+            this.DistributeMarksTabPage.Controls.Add(this.AddMarkButton);
+            this.DistributeMarksTabPage.Controls.Add(this.DistributedMarksListBox);
+            this.DistributeMarksTabPage.Controls.Add(this.ObjectPictureBox);
+            this.DistributeMarksTabPage.Controls.Add(this.label4);
+            this.DistributeMarksTabPage.Controls.Add(this.label3);
+            this.DistributeMarksTabPage.Controls.Add(this.MarksListBox);
+            this.DistributeMarksTabPage.Controls.Add(this.label2);
+            this.DistributeMarksTabPage.Controls.Add(this.ChooseBlockComboBox);
+            this.DistributeMarksTabPage.Location = new System.Drawing.Point(4, 25);
+            this.DistributeMarksTabPage.Name = "DistributeMarksTabPage";
+            this.DistributeMarksTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.DistributeMarksTabPage.Size = new System.Drawing.Size(1409, 740);
+            this.DistributeMarksTabPage.TabIndex = 0;
+            this.DistributeMarksTabPage.Text = "Распределение марок по блокам";
+            this.DistributeMarksTabPage.UseVisualStyleBackColor = true;
             // 
             // NeedToDistributeLabel
             // 
@@ -145,35 +145,39 @@
             this.NeedToDistributeLabel.TabIndex = 18;
             this.NeedToDistributeLabel.Text = "Осталось распределить марок:";
             // 
-            // SecondLevelDeleteMarkButton
+            // DeleteMarkButton
             // 
-            this.SecondLevelDeleteMarkButton.Location = new System.Drawing.Point(273, 630);
-            this.SecondLevelDeleteMarkButton.Name = "SecondLevelDeleteMarkButton";
-            this.SecondLevelDeleteMarkButton.Size = new System.Drawing.Size(151, 50);
-            this.SecondLevelDeleteMarkButton.TabIndex = 17;
-            this.SecondLevelDeleteMarkButton.Text = "Удалить марку";
-            this.SecondLevelDeleteMarkButton.UseVisualStyleBackColor = true;
-            this.SecondLevelDeleteMarkButton.Click += new System.EventHandler(this.deleteMark);
+            this.DeleteMarkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.DeleteMarkButton.Location = new System.Drawing.Point(273, 630);
+            this.DeleteMarkButton.Name = "DeleteMarkButton";
+            this.DeleteMarkButton.Size = new System.Drawing.Size(151, 50);
+            this.DeleteMarkButton.TabIndex = 17;
+            this.DeleteMarkButton.Text = "Удалить марку";
+            this.DeleteMarkButton.UseVisualStyleBackColor = true;
+            this.DeleteMarkButton.Click += new System.EventHandler(this.deleteMarkOnPressButton);
             // 
-            // SecondLevelAddMarkButton
+            // AddMarkButton
             // 
-            this.SecondLevelAddMarkButton.Location = new System.Drawing.Point(36, 630);
-            this.SecondLevelAddMarkButton.Name = "SecondLevelAddMarkButton";
-            this.SecondLevelAddMarkButton.Size = new System.Drawing.Size(151, 50);
-            this.SecondLevelAddMarkButton.TabIndex = 16;
-            this.SecondLevelAddMarkButton.Text = "Добавить марку";
-            this.SecondLevelAddMarkButton.UseVisualStyleBackColor = true;
-            this.SecondLevelAddMarkButton.Click += new System.EventHandler(this.addMark);
+            this.AddMarkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AddMarkButton.Location = new System.Drawing.Point(36, 630);
+            this.AddMarkButton.Name = "AddMarkButton";
+            this.AddMarkButton.Size = new System.Drawing.Size(151, 50);
+            this.AddMarkButton.TabIndex = 16;
+            this.AddMarkButton.Text = "Добавить марку";
+            this.AddMarkButton.UseVisualStyleBackColor = true;
+            this.AddMarkButton.Click += new System.EventHandler(this.addMarkOnPressButton);
             // 
             // DistributedMarksListBox
             // 
+            this.DistributedMarksListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.DistributedMarksListBox.FormattingEnabled = true;
             this.DistributedMarksListBox.ItemHeight = 16;
             this.DistributedMarksListBox.Location = new System.Drawing.Point(273, 204);
             this.DistributedMarksListBox.Name = "DistributedMarksListBox";
             this.DistributedMarksListBox.Size = new System.Drawing.Size(151, 404);
             this.DistributedMarksListBox.TabIndex = 15;
-            this.DistributedMarksListBox.DoubleClick += new System.EventHandler(this.deleteDistibutedMark);
+            this.DistributedMarksListBox.DoubleClick += new System.EventHandler(this.deleteDistributedMarkOnDoubleClick);
             // 
             // ObjectPictureBox
             // 
@@ -212,13 +216,15 @@
             // 
             // MarksListBox
             // 
+            this.MarksListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.MarksListBox.FormattingEnabled = true;
             this.MarksListBox.ItemHeight = 16;
             this.MarksListBox.Location = new System.Drawing.Point(36, 209);
             this.MarksListBox.Name = "MarksListBox";
             this.MarksListBox.Size = new System.Drawing.Size(151, 404);
             this.MarksListBox.TabIndex = 11;
-            this.MarksListBox.DoubleClick += new System.EventHandler(this.distibuteMark);
+            this.MarksListBox.DoubleClick += new System.EventHandler(this.addMarkOnDoubleClick);
             // 
             // label2
             // 
@@ -240,21 +246,21 @@
             this.ChooseBlockComboBox.TabIndex = 9;
             this.ChooseBlockComboBox.SelectedIndexChanged += new System.EventHandler(this.ChooseBlockComboBox_SelectedIndexChanged);
             // 
-            // tabPage2
+            // CalculationsAndChartsTabPage
             // 
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.ChooseBlockCalculationsAndGraphsComboBox);
-            this.tabPage2.Controls.Add(this.tabControl2);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Controls.Add(this.SecondLevelCoordinatesGroupBox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1409, 740);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Расчеты  и графики";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            this.CalculationsAndChartsTabPage.Controls.Add(this.label1);
+            this.CalculationsAndChartsTabPage.Controls.Add(this.ChooseBlockCalculationsAndChartsComboBox);
+            this.CalculationsAndChartsTabPage.Controls.Add(this.tabControl2);
+            this.CalculationsAndChartsTabPage.Controls.Add(this.groupBox1);
+            this.CalculationsAndChartsTabPage.Controls.Add(this.SecondLevelCoordinatesGroupBox);
+            this.CalculationsAndChartsTabPage.Location = new System.Drawing.Point(4, 25);
+            this.CalculationsAndChartsTabPage.Name = "CalculationsAndChartsTabPage";
+            this.CalculationsAndChartsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.CalculationsAndChartsTabPage.Size = new System.Drawing.Size(1409, 740);
+            this.CalculationsAndChartsTabPage.TabIndex = 1;
+            this.CalculationsAndChartsTabPage.Text = "Расчеты  и графики";
+            this.CalculationsAndChartsTabPage.UseVisualStyleBackColor = true;
+            this.CalculationsAndChartsTabPage.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // label1
             // 
@@ -268,13 +274,13 @@
             // 
             // ChooseBlockCalculationsAndGraphsComboBox
             // 
-            this.ChooseBlockCalculationsAndGraphsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ChooseBlockCalculationsAndGraphsComboBox.FormattingEnabled = true;
-            this.ChooseBlockCalculationsAndGraphsComboBox.Location = new System.Drawing.Point(181, 17);
-            this.ChooseBlockCalculationsAndGraphsComboBox.Name = "ChooseBlockCalculationsAndGraphsComboBox";
-            this.ChooseBlockCalculationsAndGraphsComboBox.Size = new System.Drawing.Size(286, 24);
-            this.ChooseBlockCalculationsAndGraphsComboBox.TabIndex = 7;
-            this.ChooseBlockCalculationsAndGraphsComboBox.SelectedIndexChanged += new System.EventHandler(this.ChooseBlockCalculationsAndGraphsComboBox_SelectedIndexChanged);
+            this.ChooseBlockCalculationsAndChartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ChooseBlockCalculationsAndChartsComboBox.FormattingEnabled = true;
+            this.ChooseBlockCalculationsAndChartsComboBox.Location = new System.Drawing.Point(181, 17);
+            this.ChooseBlockCalculationsAndChartsComboBox.Name = "ChooseBlockCalculationsAndGraphsComboBox";
+            this.ChooseBlockCalculationsAndChartsComboBox.Size = new System.Drawing.Size(286, 24);
+            this.ChooseBlockCalculationsAndChartsComboBox.TabIndex = 7;
+            this.ChooseBlockCalculationsAndChartsComboBox.SelectedIndexChanged += new System.EventHandler(this.ChooseBlockCalculationsAndGraphsComboBox_SelectedIndexChanged);
             // 
             // tabControl2
             // 
@@ -293,8 +299,8 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.groupBox3);
-            this.tabPage3.Controls.Add(this.SecondLevelMChart);
+            this.tabPage3.Controls.Add(this.MChartGroupBox);
+            this.tabPage3.Controls.Add(this.MChart);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -303,32 +309,32 @@
             this.tabPage3.Text = "M(t)";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // MChartGroupBox
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.PredictedUpperBoundMCheckBox);
-            this.groupBox3.Controls.Add(this.PredictedMCheckBox);
-            this.groupBox3.Controls.Add(this.PredictedLowerBoundMCheckBox);
-            this.groupBox3.Controls.Add(this.MCheckBox);
-            this.groupBox3.Controls.Add(this.UpperBoundMCheckBox);
-            this.groupBox3.Controls.Add(this.LowerBoundMCheckBox);
-            this.groupBox3.Location = new System.Drawing.Point(37, 477);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(416, 128);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Параметры графиков";
+            this.MChartGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.MChartGroupBox.Controls.Add(this.MChartClearButton);
+            this.MChartGroupBox.Controls.Add(this.PredictedUpperBoundMCheckBox);
+            this.MChartGroupBox.Controls.Add(this.PredictedMCheckBox);
+            this.MChartGroupBox.Controls.Add(this.PredictedLowerBoundMCheckBox);
+            this.MChartGroupBox.Controls.Add(this.MCheckBox);
+            this.MChartGroupBox.Controls.Add(this.UpperBoundMCheckBox);
+            this.MChartGroupBox.Controls.Add(this.LowerBoundMCheckBox);
+            this.MChartGroupBox.Location = new System.Drawing.Point(37, 560);
+            this.MChartGroupBox.Name = "MChartGroupBox";
+            this.MChartGroupBox.Size = new System.Drawing.Size(450, 128);
+            this.MChartGroupBox.TabIndex = 2;
+            this.MChartGroupBox.TabStop = false;
+            this.MChartGroupBox.Text = "Параметры графиков";
             // 
-            // button2
+            // MChartClearButton
             // 
-            this.button2.Location = new System.Drawing.Point(256, 55);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(117, 41);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Очистить";
-            this.button2.UseVisualStyleBackColor = true;
+            this.MChartClearButton.Location = new System.Drawing.Point(275, 55);
+            this.MChartClearButton.Name = "MChartClearButton";
+            this.MChartClearButton.Size = new System.Drawing.Size(117, 41);
+            this.MChartClearButton.TabIndex = 6;
+            this.MChartClearButton.Text = "Очистить";
+            this.MChartClearButton.UseVisualStyleBackColor = true;
+            this.MChartClearButton.Click += new System.EventHandler(this.MChartClearButton_Click);
             // 
             // PredictedUpperBoundMCheckBox
             // 
@@ -396,25 +402,25 @@
             this.LowerBoundMCheckBox.UseVisualStyleBackColor = true;
             this.LowerBoundMCheckBox.CheckedChanged += new System.EventHandler(this.LowerBoundMCheckBox_CheckedChanged);
             // 
-            // SecondLevelMChart
+            // MChart
             // 
-            this.SecondLevelMChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.MChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea11.Name = "ChartArea1";
-            this.SecondLevelMChart.ChartAreas.Add(chartArea11);
-            legend11.Name = "Legend1";
-            this.SecondLevelMChart.Legends.Add(legend11);
-            this.SecondLevelMChart.Location = new System.Drawing.Point(6, 17);
-            this.SecondLevelMChart.Name = "SecondLevelMChart";
-            this.SecondLevelMChart.Size = new System.Drawing.Size(892, 440);
-            this.SecondLevelMChart.TabIndex = 0;
-            this.SecondLevelMChart.Text = "chart1";
+            chartArea1.Name = "ChartArea1";
+            this.MChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.MChart.Legends.Add(legend1);
+            this.MChart.Location = new System.Drawing.Point(6, 17);
+            this.MChart.Name = "MChart";
+            this.MChart.Size = new System.Drawing.Size(892, 538);
+            this.MChart.TabIndex = 0;
+            this.MChart.Text = "chart1";
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.groupBox2);
-            this.tabPage4.Controls.Add(this.SecondLevelAlphaChart);
+            this.tabPage4.Controls.Add(this.AlphaChartGroupBox);
+            this.tabPage4.Controls.Add(this.AlphaChart);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -423,33 +429,33 @@
             this.tabPage4.Text = "a(t)";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // AlphaChartGroupBox
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.PredictedUpperAlphaCheckBox);
-            this.groupBox2.Controls.Add(this.PredictedAlphaCheckBox);
-            this.groupBox2.Controls.Add(this.PredictedLowerBoundAlphaCheckBox);
-            this.groupBox2.Controls.Add(this.AlphaCheckBox);
-            this.groupBox2.Controls.Add(this.UpperBoundAlphaCheckBox);
-            this.groupBox2.Controls.Add(this.LowerBoundAlphaCheckBox);
-            this.groupBox2.Location = new System.Drawing.Point(37, 477);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(421, 128);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Параметры графиков";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            this.AlphaChartGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AlphaChartGroupBox.Controls.Add(this.AlphaChartClearButton);
+            this.AlphaChartGroupBox.Controls.Add(this.PredictedUpperAlphaCheckBox);
+            this.AlphaChartGroupBox.Controls.Add(this.PredictedAlphaCheckBox);
+            this.AlphaChartGroupBox.Controls.Add(this.PredictedLowerBoundAlphaCheckBox);
+            this.AlphaChartGroupBox.Controls.Add(this.AlphaCheckBox);
+            this.AlphaChartGroupBox.Controls.Add(this.UpperBoundAlphaCheckBox);
+            this.AlphaChartGroupBox.Controls.Add(this.LowerBoundAlphaCheckBox);
+            this.AlphaChartGroupBox.Location = new System.Drawing.Point(37, 560);
+            this.AlphaChartGroupBox.Name = "AlphaChartGroupBox";
+            this.AlphaChartGroupBox.Size = new System.Drawing.Size(450, 128);
+            this.AlphaChartGroupBox.TabIndex = 4;
+            this.AlphaChartGroupBox.TabStop = false;
+            this.AlphaChartGroupBox.Text = "Параметры графиков";
+            this.AlphaChartGroupBox.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // button1
+            // AlphaChartClearButton
             // 
-            this.button1.Location = new System.Drawing.Point(260, 55);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 41);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Очистить";
-            this.button1.UseVisualStyleBackColor = true;
+            this.AlphaChartClearButton.Location = new System.Drawing.Point(275, 55);
+            this.AlphaChartClearButton.Name = "AlphaChartClearButton";
+            this.AlphaChartClearButton.Size = new System.Drawing.Size(117, 41);
+            this.AlphaChartClearButton.TabIndex = 6;
+            this.AlphaChartClearButton.Text = "Очистить";
+            this.AlphaChartClearButton.UseVisualStyleBackColor = true;
+            this.AlphaChartClearButton.Click += new System.EventHandler(this.AlphaChartClearButton_Click);
             // 
             // PredictedUpperAlphaCheckBox
             // 
@@ -517,25 +523,25 @@
             this.LowerBoundAlphaCheckBox.UseVisualStyleBackColor = true;
             this.LowerBoundAlphaCheckBox.CheckedChanged += new System.EventHandler(this.LowerBoundAlphaCheckBox_CheckedChanged);
             // 
-            // SecondLevelAlphaChart
+            // AlphaChart
             // 
-            this.SecondLevelAlphaChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.AlphaChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea12.Name = "ChartArea1";
-            this.SecondLevelAlphaChart.ChartAreas.Add(chartArea12);
-            legend12.Name = "Legend1";
-            this.SecondLevelAlphaChart.Legends.Add(legend12);
-            this.SecondLevelAlphaChart.Location = new System.Drawing.Point(6, 16);
-            this.SecondLevelAlphaChart.Name = "SecondLevelAlphaChart";
-            this.SecondLevelAlphaChart.Size = new System.Drawing.Size(892, 440);
-            this.SecondLevelAlphaChart.TabIndex = 3;
-            this.SecondLevelAlphaChart.Text = "chart2";
+            chartArea2.Name = "ChartArea1";
+            this.AlphaChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.AlphaChart.Legends.Add(legend2);
+            this.AlphaChart.Location = new System.Drawing.Point(6, 16);
+            this.AlphaChart.Name = "AlphaChart";
+            this.AlphaChart.Size = new System.Drawing.Size(892, 538);
+            this.AlphaChart.TabIndex = 3;
+            this.AlphaChart.Text = "chart2";
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.groupBox4);
-            this.tabPage5.Controls.Add(this.SecondLevelResponseFunctionChart);
+            this.tabPage5.Controls.Add(this.ResponseFunctionGroupBox);
+            this.tabPage5.Controls.Add(this.ResponseFunctionChart);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(904, 710);
@@ -543,23 +549,22 @@
             this.tabPage5.Text = "Z(t)";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
+            // ResponseFunctionGroupBox
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.checkBox1);
-            this.groupBox4.Controls.Add(this.checkBox2);
-            this.groupBox4.Controls.Add(this.checkBox3);
-            this.groupBox4.Controls.Add(this.checkBox4);
-            this.groupBox4.Controls.Add(this.checkBox5);
-            this.groupBox4.Controls.Add(this.checkBox6);
-            this.groupBox4.Controls.Add(this.button3);
-            this.groupBox4.Location = new System.Drawing.Point(37, 477);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(421, 128);
-            this.groupBox4.TabIndex = 6;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Параметры графиков";
+            this.ResponseFunctionGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ResponseFunctionGroupBox.Controls.Add(this.checkBox1);
+            this.ResponseFunctionGroupBox.Controls.Add(this.checkBox2);
+            this.ResponseFunctionGroupBox.Controls.Add(this.checkBox3);
+            this.ResponseFunctionGroupBox.Controls.Add(this.checkBox4);
+            this.ResponseFunctionGroupBox.Controls.Add(this.checkBox5);
+            this.ResponseFunctionGroupBox.Controls.Add(this.checkBox6);
+            this.ResponseFunctionGroupBox.Controls.Add(this.ResponseFunctionChartClearButton);
+            this.ResponseFunctionGroupBox.Location = new System.Drawing.Point(37, 560);
+            this.ResponseFunctionGroupBox.Name = "ResponseFunctionGroupBox";
+            this.ResponseFunctionGroupBox.Size = new System.Drawing.Size(450, 128);
+            this.ResponseFunctionGroupBox.TabIndex = 6;
+            this.ResponseFunctionGroupBox.TabStop = false;
+            this.ResponseFunctionGroupBox.Text = "Параметры графиков";
             // 
             // checkBox1
             // 
@@ -627,157 +632,159 @@
             this.checkBox6.UseVisualStyleBackColor = true;
             this.checkBox6.CheckedChanged += new System.EventHandler(this.LowerBoundResponseFunction_CheckedChanged);
             // 
-            // button3
+            // ResponseFunctionChartClearButton
             // 
-            this.button3.Location = new System.Drawing.Point(260, 55);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(117, 41);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Очистить";
-            this.button3.UseVisualStyleBackColor = true;
+            this.ResponseFunctionChartClearButton.Location = new System.Drawing.Point(275, 55);
+            this.ResponseFunctionChartClearButton.Name = "ResponseFunctionChartClearButton";
+            this.ResponseFunctionChartClearButton.Size = new System.Drawing.Size(117, 41);
+            this.ResponseFunctionChartClearButton.TabIndex = 6;
+            this.ResponseFunctionChartClearButton.Text = "Очистить";
+            this.ResponseFunctionChartClearButton.UseVisualStyleBackColor = true;
+            this.ResponseFunctionChartClearButton.Click += new System.EventHandler(this.ResponseFunctionChartClearButton_Click);
             // 
-            // SecondLevelResponseFunctionChart
+            // ResponseFunctionChart
             // 
-            this.SecondLevelResponseFunctionChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ResponseFunctionChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea10.Name = "ChartArea1";
-            this.SecondLevelResponseFunctionChart.ChartAreas.Add(chartArea10);
-            legend10.Name = "Legend1";
-            this.SecondLevelResponseFunctionChart.Legends.Add(legend10);
-            this.SecondLevelResponseFunctionChart.Location = new System.Drawing.Point(3, 16);
-            this.SecondLevelResponseFunctionChart.Name = "SecondLevelResponseFunctionChart";
-            this.SecondLevelResponseFunctionChart.Size = new System.Drawing.Size(892, 440);
-            this.SecondLevelResponseFunctionChart.TabIndex = 5;
-            this.SecondLevelResponseFunctionChart.Text = "chart2";
+            chartArea3.Name = "ChartArea1";
+            this.ResponseFunctionChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.ResponseFunctionChart.Legends.Add(legend3);
+            this.ResponseFunctionChart.Location = new System.Drawing.Point(3, 16);
+            this.ResponseFunctionChart.Name = "ResponseFunctionChart";
+            this.ResponseFunctionChart.Size = new System.Drawing.Size(892, 538);
+            this.ResponseFunctionChart.TabIndex = 5;
+            this.ResponseFunctionChart.Text = "chart2";
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox1.Controls.Add(this.SecondLevelEstimationMarksDataGridView);
-            this.groupBox1.Location = new System.Drawing.Point(4, 463);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Controls.Add(this.EstimationMarksDataGridView);
+            this.groupBox1.Location = new System.Drawing.Point(4, 390);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(485, 269);
+            this.groupBox1.Size = new System.Drawing.Size(485, 342);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Оценка состояния объекта";
             // 
-            // SecondLevelEstimationMarksDataGridView
+            // EstimationMarksDataGridView
             // 
-            this.SecondLevelEstimationMarksDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SecondLevelEstimationMarksDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SecondLevelEstimationMarksDataGridView.Location = new System.Drawing.Point(3, 18);
-            this.SecondLevelEstimationMarksDataGridView.Name = "SecondLevelEstimationMarksDataGridView";
-            this.SecondLevelEstimationMarksDataGridView.RowHeadersWidth = 51;
-            this.SecondLevelEstimationMarksDataGridView.RowTemplate.Height = 24;
-            this.SecondLevelEstimationMarksDataGridView.Size = new System.Drawing.Size(479, 248);
-            this.SecondLevelEstimationMarksDataGridView.TabIndex = 0;
-            this.SecondLevelEstimationMarksDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SecondLevelEstimationDataGridView_CellContentClick);
+            this.EstimationMarksDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.EstimationMarksDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EstimationMarksDataGridView.Location = new System.Drawing.Point(3, 18);
+            this.EstimationMarksDataGridView.Name = "EstimationMarksDataGridView";
+            this.EstimationMarksDataGridView.RowHeadersWidth = 51;
+            this.EstimationMarksDataGridView.RowTemplate.Height = 24;
+            this.EstimationMarksDataGridView.Size = new System.Drawing.Size(479, 321);
+            this.EstimationMarksDataGridView.TabIndex = 0;
+            this.EstimationMarksDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SecondLevelEstimationDataGridView_CellContentClick);
             // 
             // SecondLevelCoordinatesGroupBox
             // 
-            this.SecondLevelCoordinatesGroupBox.Controls.Add(this.SecondLevelCoordinatesMarksDataGridView);
+            this.SecondLevelCoordinatesGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.SecondLevelCoordinatesGroupBox.Controls.Add(this.CoordinatesMarksDataGridView);
             this.SecondLevelCoordinatesGroupBox.Location = new System.Drawing.Point(4, 61);
             this.SecondLevelCoordinatesGroupBox.Name = "SecondLevelCoordinatesGroupBox";
-            this.SecondLevelCoordinatesGroupBox.Size = new System.Drawing.Size(485, 396);
+            this.SecondLevelCoordinatesGroupBox.Size = new System.Drawing.Size(485, 323);
             this.SecondLevelCoordinatesGroupBox.TabIndex = 4;
             this.SecondLevelCoordinatesGroupBox.TabStop = false;
             this.SecondLevelCoordinatesGroupBox.Text = "Фазовые координаты";
             // 
-            // SecondLevelCoordinatesMarksDataGridView
+            // CoordinatesMarksDataGridView
             // 
-            this.SecondLevelCoordinatesMarksDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SecondLevelCoordinatesMarksDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SecondLevelCoordinatesMarksDataGridView.Location = new System.Drawing.Point(3, 18);
-            this.SecondLevelCoordinatesMarksDataGridView.Name = "SecondLevelCoordinatesMarksDataGridView";
-            this.SecondLevelCoordinatesMarksDataGridView.RowHeadersWidth = 51;
-            this.SecondLevelCoordinatesMarksDataGridView.RowTemplate.Height = 24;
-            this.SecondLevelCoordinatesMarksDataGridView.Size = new System.Drawing.Size(479, 375);
-            this.SecondLevelCoordinatesMarksDataGridView.TabIndex = 0;
+            this.CoordinatesMarksDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CoordinatesMarksDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CoordinatesMarksDataGridView.Location = new System.Drawing.Point(3, 18);
+            this.CoordinatesMarksDataGridView.Name = "CoordinatesMarksDataGridView";
+            this.CoordinatesMarksDataGridView.RowHeadersWidth = 51;
+            this.CoordinatesMarksDataGridView.RowTemplate.Height = 24;
+            this.CoordinatesMarksDataGridView.Size = new System.Drawing.Size(479, 302);
+            this.CoordinatesMarksDataGridView.TabIndex = 0;
             // 
             // SecondLevelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1417, 769);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.SecondLevelTabControl);
             this.Name = "SecondLevelForm";
             this.Text = "Второй уровень";
             this.Load += new System.EventHandler(this.SecondLevelForm_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.SecondLevelTabControl.ResumeLayout(false);
+            this.DistributeMarksTabPage.ResumeLayout(false);
+            this.DistributeMarksTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ObjectPictureBox)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.CalculationsAndChartsTabPage.ResumeLayout(false);
+            this.CalculationsAndChartsTabPage.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelMChart)).EndInit();
+            this.MChartGroupBox.ResumeLayout(false);
+            this.MChartGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MChart)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelAlphaChart)).EndInit();
+            this.AlphaChartGroupBox.ResumeLayout(false);
+            this.AlphaChartGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AlphaChart)).EndInit();
             this.tabPage5.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelResponseFunctionChart)).EndInit();
+            this.ResponseFunctionGroupBox.ResumeLayout(false);
+            this.ResponseFunctionGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResponseFunctionChart)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelEstimationMarksDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EstimationMarksDataGridView)).EndInit();
             this.SecondLevelCoordinatesGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SecondLevelCoordinatesMarksDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CoordinatesMarksDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl SecondLevelTabControl;
+        private System.Windows.Forms.TabPage DistributeMarksTabPage;
+        private System.Windows.Forms.TabPage CalculationsAndChartsTabPage;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox MChartGroupBox;
+        private System.Windows.Forms.Button MChartClearButton;
         private System.Windows.Forms.CheckBox PredictedUpperBoundMCheckBox;
         private System.Windows.Forms.CheckBox PredictedMCheckBox;
         private System.Windows.Forms.CheckBox PredictedLowerBoundMCheckBox;
         private System.Windows.Forms.CheckBox MCheckBox;
         private System.Windows.Forms.CheckBox UpperBoundMCheckBox;
         private System.Windows.Forms.CheckBox LowerBoundMCheckBox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart SecondLevelMChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart MChart;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox AlphaChartGroupBox;
+        private System.Windows.Forms.Button AlphaChartClearButton;
         private System.Windows.Forms.CheckBox PredictedUpperAlphaCheckBox;
         private System.Windows.Forms.CheckBox PredictedAlphaCheckBox;
         private System.Windows.Forms.CheckBox PredictedLowerBoundAlphaCheckBox;
         private System.Windows.Forms.CheckBox AlphaCheckBox;
         private System.Windows.Forms.CheckBox UpperBoundAlphaCheckBox;
         private System.Windows.Forms.CheckBox LowerBoundAlphaCheckBox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart SecondLevelAlphaChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart AlphaChart;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView SecondLevelEstimationMarksDataGridView;
+        private System.Windows.Forms.DataGridView EstimationMarksDataGridView;
         private System.Windows.Forms.GroupBox SecondLevelCoordinatesGroupBox;
-        private System.Windows.Forms.DataGridView SecondLevelCoordinatesMarksDataGridView;
+        private System.Windows.Forms.DataGridView CoordinatesMarksDataGridView;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox ChooseBlockCalculationsAndGraphsComboBox;
+        private System.Windows.Forms.ComboBox ChooseBlockCalculationsAndChartsComboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox ChooseBlockComboBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox DistributedMarksListBox;
         private System.Windows.Forms.PictureBox ObjectPictureBox;
-        private System.Windows.Forms.Button SecondLevelAddMarkButton;
-        private System.Windows.Forms.Button SecondLevelDeleteMarkButton;
+        private System.Windows.Forms.Button AddMarkButton;
+        private System.Windows.Forms.Button DeleteMarkButton;
         private System.Windows.Forms.Label NeedToDistributeLabel;
         private System.Windows.Forms.ListBox MarksListBox;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.DataVisualization.Charting.Chart SecondLevelResponseFunctionChart;
+        private System.Windows.Forms.GroupBox ResponseFunctionGroupBox;
+        private System.Windows.Forms.Button ResponseFunctionChartClearButton;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ResponseFunctionChart;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;

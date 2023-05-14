@@ -35,7 +35,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
         public SecondLevelForm(
             ISecondLevelDecompositionService decompositionService,
             ISecondLevelChartService chartService,
-            int structuralBlocksCount, 
+            int structuralBlocksCount,
             int geodeticMarksCount,
             double epsilon,
             double alpha,
@@ -50,8 +50,6 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             this.needMarksOnEachBlock = geodeticMarksCount / structuralBlocksCount;
             this.distributedMarksCount = 0;
 
-            // объекты для вычислений 
-            
             this.epsilon = epsilon;
             this.alpha = alpha;
 
@@ -59,7 +57,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
 
             initBlockNames();
 
-            InitializeComponent();        
+            InitializeComponent();
         }
         private void SecondLevelForm_Load(object sender, EventArgs e)
         {
@@ -68,131 +66,20 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             initDistributedMarks();
             initNeedToDistributeLabel();
             fillMarksListBox();
+            CalculationsAndChartsTabPage.Enabled = false;
         }
 
-        private void initCalculationsAndGraphsFormTab()
+        // --------------------МЕТОДЫ ДЛЯ СТРАНИЦЫ ФОРМЫ "Распределение марок по блокам"--------------------
+
+        // При смене блока заполняем распределенные марки в listBox
+        private void ChooseBlockComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fillChooseBlockComboBox(ChooseBlockCalculationsAndGraphsComboBox);
-            selectChooseBlockComboBoxDefaultItem(ChooseBlockCalculationsAndGraphsComboBox);
-        }        
-
-        private void fillCoordinatesAndEstimationTable()
-        {
-            this.calculatedAlphaAndMValues = new Dictionary<string, List<double>>();
-            this.coordinatesTableValues = new List<List<double>>();
-
-            fillCoordinatesTable();
-            fillEstimationTable();
-        }               
-
-        private void fillCoordinatesTable()
-        {
-            decompositionService.CreateCoordinatesTableColumns(SecondLevelCoordinatesMarksDataGridView);
-            fillEpochColumnInCoordinatesTable();
-
-            decompositionService.CalculateValuesInMarksCoordinatesTable(
-                ref coordinatesTableValues,
-                ref calculatedAlphaAndMValues,
-                distributedMarks[ChooseBlockCalculationsAndGraphsComboBox.SelectedItem.ToString()],
-                dataGridTable,                
-                epsilon,
-                alpha);
-
-            fillCalculatedValuesInCoordinatesTable();
-            fillEstimationEpochValues();
+            DistributedMarksListBox.Items.Clear();
+            fillDistributedMarksListBox();
+            changeNeedToDistributeLabel();
         }
 
-        private void fillEstimationTable()
-        {
-            decompositionService.CreateEstimationTableColumns(SecondLevelEstimationMarksDataGridView);
-            fillEpochColumnInEstimationTable();
-            fillPredictedMValuesInEstimationTable();
-
-            decompositionService.FillValuesInEstimationTable(
-                ref calculatedAlphaAndMValues,
-                SecondLevelEstimationMarksDataGridView);
-        }
-
-        private void fillEpochColumnInEstimationTable()
-        {
-            for (int i = 0; i < calculatedAlphaAndMValues["Epoches"].Count - 1; i++)
-            {
-                SecondLevelEstimationMarksDataGridView.Rows.Add();
-                SecondLevelEstimationMarksDataGridView.Rows[i].Cells[0].Value = Convert.ToInt32(calculatedAlphaAndMValues["Epoches"][i]);
-            }
-        }
-
-        private void fillPredictedMValuesInEstimationTable()
-        {
-            // в колонках [1-3] отображаются значения M 
-
-            for (int i = 0; i < calculatedAlphaAndMValues["lowerBoundMValues"].Count; i++)
-            {
-                SecondLevelEstimationMarksDataGridView.Rows[i].Cells[1].Value = calculatedAlphaAndMValues["lowerBoundMValues"][i];
-            }
-
-            for (int i = 0; i < calculatedAlphaAndMValues["MValues"].Count; i++)
-            {
-                SecondLevelEstimationMarksDataGridView.Rows[i].Cells[2].Value = calculatedAlphaAndMValues["MValues"][i];
-            }
-
-            for (int i = 0; i < calculatedAlphaAndMValues["upperBoundMValues"].Count; i++)
-            {
-                SecondLevelEstimationMarksDataGridView.Rows[i].Cells[3].Value = calculatedAlphaAndMValues["upperBoundMValues"][i];
-            }
-
-            // Добавляем прогнозные значения для каждой M
-            int lastEstimationTableRowIndex = SecondLevelEstimationMarksDataGridView.Rows.Count - 2;
-            int lastPredictedMValueIndex = calculatedAlphaAndMValues["predictedMValues"].Count - 1;
-
-            SecondLevelEstimationMarksDataGridView.Rows[lastEstimationTableRowIndex].Cells[1].Value = calculatedAlphaAndMValues["predictedLowerBoundMValues"][lastPredictedMValueIndex];
-            SecondLevelEstimationMarksDataGridView.Rows[lastEstimationTableRowIndex].Cells[2].Value = calculatedAlphaAndMValues["predictedMValues"][lastPredictedMValueIndex];
-            SecondLevelEstimationMarksDataGridView.Rows[lastEstimationTableRowIndex].Cells[3].Value = calculatedAlphaAndMValues["predictedUpperBoundMValues"][lastPredictedMValueIndex];
-        }
-
-        private void fillEpochColumnInCoordinatesTable()
-        {
-            
-            for (int row = 0; row < dataGridTable.Rows.Count; row++)
-            {
-                SecondLevelCoordinatesMarksDataGridView.Rows.Add();
-                SecondLevelCoordinatesMarksDataGridView.Rows[row].Cells[0].Value = dataGridTable.Rows[row].Cells[0].Value;
-            }
-
-            SecondLevelCoordinatesMarksDataGridView.Rows[SecondLevelCoordinatesMarksDataGridView.Rows.Count - 2].Cells[0].Value =
-                Convert.ToInt32(dataGridTable.Rows[SecondLevelCoordinatesMarksDataGridView.Rows.Count - 3].Cells[0].Value.ToString()) + 1;
-        }
-
-        private void fillCalculatedValuesInCoordinatesTable()
-        {
-            for (int i = 0; i < coordinatesTableValues.Count; i++)
-            {
-                for (int j = 0; j < coordinatesTableValues[i].Count; j++)
-                {
-                    SecondLevelCoordinatesMarksDataGridView.Rows[j].Cells[i + 1].Value = Convert.ToDouble(coordinatesTableValues[i][j]);
-                }
-            }
-        }
-        private void fillEstimationEpochValues()
-        {
-            List<double> epoches = new List<double>();
-
-            for (int row = 0; row < SecondLevelCoordinatesMarksDataGridView.Rows.Count; row++)
-            {
-                epoches.Add(Convert.ToDouble(SecondLevelCoordinatesMarksDataGridView.Rows[row].Cells[0].Value));
-            }
-            calculatedAlphaAndMValues["Epoches"] = epoches;
-        }
-
-
-        private void fillChooseBlockComboBox(ComboBox comboBox)
-        {
-            for (int i = 0; i < structuralBlocksCount; i++)
-            {
-                comboBox.Items.Add(blockNames[i]);
-            }
-        }
-
+        // Заполняем марками listBox
         private void fillMarksListBox()
         {
             for (int i = 1; i <= marksCount; i++)
@@ -201,44 +88,49 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             }
         }
 
-        private void initDistributedMarks()
+        // Заполняем уже распределенные марки в listBox
+        private void fillDistributedMarksListBox()
         {
-            for (int i = 0; i < structuralBlocksCount; i++)
+            if (!distributedMarks.ContainsKey(ChooseBlockComboBox.SelectedItem.ToString()))
             {
-                distributedMarks[blockNames[i]] = new List<string>();
-            }
-        }
-
-        // при двойном клике по марке
-        private void distibuteMark(object sender, EventArgs e)
-        {
-            if (hasDistrubutedMarks()) {
-                MessageBox.Show("Все марки для блока " + ChooseBlockComboBox.SelectedItem.ToString() + " распределены");
                 return;
             }
 
-            if (MarksListBox.SelectedItem != null)
+            for (int i = 0; i < distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].Count; i++)
             {
-                // добавляем выбанную марку в словарь с распределенными марками по блоку
-                distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].
-                    Add(Convert.ToString(MarksListBox.SelectedItem));
-
-                DistributedMarksListBox.Items.Add(MarksListBox.SelectedItem);
-                MarksListBox.Items.Remove(MarksListBox.SelectedItem);                
+                DistributedMarksListBox.Items.Add(distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()][i]);
             }
+        }
+
+        // Добавление марки в listBox с распределенными марками при двойном клике
+        private void addMarkOnDoubleClick(object sender, EventArgs e)
+        {
+            if (MarksListBox.SelectedItem == null)
+            {
+                return;
+            }
+
+            if (hasDistrubutedMarks())
+            {
+                MessageBox.Show("Все марки для блока " + ChooseBlockComboBox.SelectedItem.ToString() + " распределены");
+                return;
+            }
+            
+            processMarkAddition(ChooseBlockComboBox.SelectedItem.ToString(), MarksListBox.SelectedItem);
 
             distributedMarksCount++;
             changeNeedToDistributeLabel();
+            
 
             if (needMarksOnEachBlock * structuralBlocksCount == distributedMarksCount)
             {
                 MessageBox.Show("Все марки распределены!");
-                initCalculationsAndGraphsFormTab();
+                initCalculationsAndChartsFormTab();
             }
-        }
+        }        
 
-        // при нажатии на кнопку
-        private void addMark(object sender, EventArgs e)
+        // Добавление марки в listBox с распределенными марками при нажатии на кнопку
+        private void addMarkOnPressButton(object sender, EventArgs e)
         {
             if (hasDistrubutedMarks())
             {
@@ -252,25 +144,14 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 return;
             }
 
-            // если выбрана марка пользователем - добавляем ее
+            // Если выбрана марка пользователем - добавляем ее
             if (MarksListBox.SelectedItem != null)
             {
-                // добавляем выбанную марку в словарь с распределенными марками по блоку
-                distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].
-                    Add(Convert.ToString(MarksListBox.SelectedItem));
-
-                DistributedMarksListBox.Items.Add(MarksListBox.SelectedItem);
-                MarksListBox.Items.Remove(MarksListBox.SelectedItem);                
+                processMarkAddition(ChooseBlockComboBox.SelectedItem.ToString(), MarksListBox.SelectedItem);
             }
-            // иначе добавляем первую доступную из списка            
             else
             {
-                // добавляем выбанную марку в словарь с распределенными марками по блоку
-                distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].
-                    Add(Convert.ToString(MarksListBox.Items[0]));
-
-                DistributedMarksListBox.Items.Add(MarksListBox.Items[0]);
-                MarksListBox.Items.Remove(MarksListBox.Items[0]);                
+                processMarkAddition(ChooseBlockComboBox.SelectedItem.ToString(), MarksListBox.Items[0]);              
             }
 
             distributedMarksCount++;
@@ -279,29 +160,24 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             if (needMarksOnEachBlock * structuralBlocksCount == distributedMarksCount)
             {
                 MessageBox.Show("Все марки распределены!");
-                initCalculationsAndGraphsFormTab();
+                initCalculationsAndChartsFormTab();
             }
         }
 
-        // при двойном клике по марке
-        private void deleteDistibutedMark(object sender, EventArgs e)
+        // Удаление марки в listBox с распределенными марками при двойном клике
+        private void deleteDistributedMarkOnDoubleClick(object sender, EventArgs e)
         {
             if (DistributedMarksListBox.SelectedItem != null)
             {
-                // удаляем выбанную марку из словаря с распределенными марками по блоку
-                distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].
-                    Remove(Convert.ToString(DistributedMarksListBox.SelectedItem));
+                processMarkDeletion(ChooseBlockComboBox.SelectedItem.ToString(), DistributedMarksListBox.SelectedItem);
 
-                MarksListBox.Items.Add(DistributedMarksListBox.SelectedItem);
-                DistributedMarksListBox.Items.Remove(DistributedMarksListBox.SelectedItem);
+                distributedMarksCount--;
+                changeNeedToDistributeLabel();
             }
-
-            distributedMarksCount--;
-            changeNeedToDistributeLabel();
         }
 
-        // при нажатии на кнопку
-        private void deleteMark(object sender, EventArgs e)
+        // Удаление марки в listBox с распределенными марками при нажатии на кнопку
+        private void deleteMarkOnPressButton(object sender, EventArgs e)
         {
             if (DistributedMarksListBox.Items.Count == 0)
             {
@@ -309,29 +185,33 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 return;
             }
 
-            // если выбрана марка пользователем - удаляем ее
             if (DistributedMarksListBox.SelectedItem != null)
             {
-                // удаляем выбанную марку из словаря с распределенными марками по блоку
-                distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].
-                    Remove(Convert.ToString(DistributedMarksListBox.SelectedItem));
-
-                MarksListBox.Items.Add(DistributedMarksListBox.SelectedItem);
-                DistributedMarksListBox.Items.Remove(DistributedMarksListBox.SelectedItem);                
+                processMarkDeletion(ChooseBlockComboBox.SelectedItem.ToString(), DistributedMarksListBox.SelectedItem);
             }
-            // иначе добавляем первую доступную из списка            
             else
             {
-                // удаляем выбанную марку из словаря с распределенными марками по блоку
-                distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].
-                    Remove(Convert.ToString(DistributedMarksListBox.Items[0]));
-
-                MarksListBox.Items.Add(DistributedMarksListBox.Items[0]);
-                DistributedMarksListBox.Items.Remove(DistributedMarksListBox.Items[0]);                
+                processMarkDeletion(ChooseBlockComboBox.SelectedItem.ToString(), DistributedMarksListBox.Items[0]);
             }
 
             distributedMarksCount--;
             changeNeedToDistributeLabel();
+        }
+
+        private void processMarkAddition(string blockName, object selectedMark)
+        {
+            distributedMarks[blockName].Add(selectedMark.ToString());
+
+            DistributedMarksListBox.Items.Add(selectedMark);
+            MarksListBox.Items.Remove(selectedMark);
+        }
+
+        private void processMarkDeletion(string blockName, object selectedMark)
+        {
+            distributedMarks[blockName].Remove(selectedMark.ToString());
+
+            MarksListBox.Items.Add(selectedMark);
+            DistributedMarksListBox.Items.Remove(selectedMark);
         }
 
         private bool hasDistrubutedMarks()
@@ -339,29 +219,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             return distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].Count == needMarksOnEachBlock;
         }
 
-
-        // при смене блока заполняем распределенные марки
-        private void ChooseBlockComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DistributedMarksListBox.Items.Clear();
-            fillDistributedMarksListBox();
-            changeNeedToDistributeLabel();
-        }
-
-        private void fillDistributedMarksListBox()
-        {
-            if (!distributedMarks.ContainsKey(ChooseBlockComboBox.SelectedItem.ToString()))
-            {
-                return;
-            }
-
-            for (int i = 0; i < distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].Count; i++)
-            {
-                DistributedMarksListBox.Items.Add(distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()][i]);
-            }
-        }                
-
-        // доступные названия блоков
+        // Доступные названия блоков
         private void initBlockNames()
         {
             this.blockNames = new List<string>();
@@ -372,12 +230,13 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
             this.blockNames.Add("Д");
         }
 
-        // сколько марок еще нужно распределить на текущий выбранный блок
+        // Начальное количество марок, необходимых для распределения на одном блоке
         private void initNeedToDistributeLabel()
         {
             NeedToDistributeLabel.Text = "Осталось распределить марок: " + Convert.ToString(needMarksOnEachBlock);
         }
 
+        // Сколько марок осталось распределить на текущем выбранном блоке
         private void changeNeedToDistributeLabel()
         {
             if (!distributedMarks.ContainsKey(ChooseBlockComboBox.SelectedItem.ToString()))
@@ -389,23 +248,218 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 Convert.ToString(needMarksOnEachBlock - distributedMarks[ChooseBlockComboBox.SelectedItem.ToString()].Count);
         }
 
+        // Инициализация словаря с распределенными марками. 
+        // Словарь вида: "A": [1,2,3,4,5]
+        private void initDistributedMarks()
+        {
+            for (int i = 0; i < structuralBlocksCount; i++)
+            {
+                distributedMarks[blockNames[i]] = new List<string>();
+            }
+        }
+
+        // --------------------МЕТОДЫ ДЛЯ СТРАНИЦЫ ФОРМЫ "Расчеты и графики"--------------------
+
+        private void initCalculationsAndChartsFormTab()
+        {
+            CalculationsAndChartsTabPage.Enabled = true;
+            fillChooseBlockComboBox(ChooseBlockCalculationsAndChartsComboBox);
+            selectChooseBlockComboBoxDefaultItem(ChooseBlockCalculationsAndChartsComboBox);
+        }
+
+        private void fillCoordinatesAndEstimationTable()
+        {
+            this.calculatedAlphaAndMValues = new Dictionary<string, List<double>>();
+            this.coordinatesTableValues = new List<List<double>>();
+
+            fillCoordinatesTable();
+            fillEstimationTable();
+        }
+
+        private void fillCoordinatesTable()
+        {
+            decompositionService.CreateCoordinatesTableColumns(CoordinatesMarksDataGridView);
+            fillEpochColumnInCoordinatesTable();
+
+            decompositionService.CalculateValuesInMarksCoordinatesTable(
+                ref coordinatesTableValues,
+                ref calculatedAlphaAndMValues,
+                distributedMarks[ChooseBlockCalculationsAndChartsComboBox.SelectedItem.ToString()],
+                dataGridTable,
+                epsilon,
+                alpha);
+
+            fillCalculatedValuesInCoordinatesTable();
+        }
+
+        private void fillEstimationTable()
+        {
+            fillEstimationEpochValues();
+            decompositionService.CreateEstimationTableColumns(EstimationMarksDataGridView);
+            fillEpochColumnInEstimationTable();
+            fillPredictedMValuesInEstimationTable();
+
+            decompositionService.FillValuesInEstimationTable(
+                ref calculatedAlphaAndMValues,
+                EstimationMarksDataGridView);
+        }
+        private void fillEpochColumnInCoordinatesTable()
+        {
+
+            for (int row = 0; row < dataGridTable.Rows.Count; row++)
+            {
+                CoordinatesMarksDataGridView.Rows.Add();
+                CoordinatesMarksDataGridView.Rows[row].Cells[0].Value = dataGridTable.Rows[row].Cells[0].Value;
+            }
+
+            CoordinatesMarksDataGridView.Rows[CoordinatesMarksDataGridView.Rows.Count - 2].Cells[0].Value =
+                Convert.ToInt32(dataGridTable.Rows[CoordinatesMarksDataGridView.Rows.Count - 3].Cells[0].Value.ToString()) + 1;
+        }
+
+        private void fillCalculatedValuesInCoordinatesTable()
+        {
+            for (int i = 0; i < coordinatesTableValues.Count; i++)
+            {
+                for (int j = 0; j < coordinatesTableValues[i].Count; j++)
+                {
+                    CoordinatesMarksDataGridView.Rows[j].Cells[i + 1].Value = Convert.ToDouble(coordinatesTableValues[i][j]);
+                }
+            }
+        }
+
+        private void fillEpochColumnInEstimationTable()
+        {
+            for (int i = 0; i < calculatedAlphaAndMValues["Epoches"].Count - 1; i++)
+            {
+                EstimationMarksDataGridView.Rows.Add();
+                EstimationMarksDataGridView.Rows[i].Cells[0].Value = Convert.ToInt32(calculatedAlphaAndMValues["Epoches"][i]);
+            }
+        }
+
+        private void fillPredictedMValuesInEstimationTable()
+        {
+            // в колонках [1-3] отображаются значения M 
+            fillLowerBoundMValuesInEstimationTable();
+            fillMValuesInEstimationTable();
+            fillUpperBoundMValuesInEstimationTable();
+
+            // Добавляем прогнозные значения для каждой M
+            int lastEstimationTableRowIndex = EstimationMarksDataGridView.Rows.Count - 2;
+            int lastPredictedMValueIndex = calculatedAlphaAndMValues["predictedMValues"].Count - 1;
+
+            EstimationMarksDataGridView.Rows[lastEstimationTableRowIndex].Cells[1].Value = calculatedAlphaAndMValues["predictedLowerBoundMValues"][lastPredictedMValueIndex];
+            EstimationMarksDataGridView.Rows[lastEstimationTableRowIndex].Cells[2].Value = calculatedAlphaAndMValues["predictedMValues"][lastPredictedMValueIndex];
+            EstimationMarksDataGridView.Rows[lastEstimationTableRowIndex].Cells[3].Value = calculatedAlphaAndMValues["predictedUpperBoundMValues"][lastPredictedMValueIndex];
+        }
+
+        private void fillLowerBoundMValuesInEstimationTable()
+        {
+            for (int i = 0; i < calculatedAlphaAndMValues["lowerBoundMValues"].Count; i++)
+            {
+                EstimationMarksDataGridView.Rows[i].Cells[1].Value = calculatedAlphaAndMValues["lowerBoundMValues"][i];
+            }
+        }
+
+        private void fillMValuesInEstimationTable()
+        {
+            for (int i = 0; i < calculatedAlphaAndMValues["MValues"].Count; i++)
+            {
+                EstimationMarksDataGridView.Rows[i].Cells[2].Value = calculatedAlphaAndMValues["MValues"][i];
+            }
+        }
+
+        private void fillUpperBoundMValuesInEstimationTable()
+        {
+            for (int i = 0; i < calculatedAlphaAndMValues["upperBoundMValues"].Count; i++)
+            {
+                EstimationMarksDataGridView.Rows[i].Cells[3].Value = calculatedAlphaAndMValues["upperBoundMValues"][i];
+            }
+        }
+        
+        private void fillEstimationEpochValues()
+        {
+            List<double> epoches = new List<double>();
+
+            for (int row = 0; row < CoordinatesMarksDataGridView.Rows.Count; row++)
+            {
+                epoches.Add(Convert.ToDouble(CoordinatesMarksDataGridView.Rows[row].Cells[0].Value));
+            }
+            calculatedAlphaAndMValues["Epoches"] = epoches;
+        }
+
+        private void fillChooseBlockComboBox(ComboBox comboBox)
+        {
+            for (int i = 0; i < structuralBlocksCount; i++)
+            {
+                comboBox.Items.Add(blockNames[i]);
+            }
+        }
+
         private void selectChooseBlockComboBoxDefaultItem(ComboBox comboBox)
         {
             if (structuralBlocksCount == 0)
-            {                
+            {
                 return;
             }
 
             comboBox.SelectedIndex = 0;
         }
 
-        // МЕТОДЫ ДЛЯ ОТРИСОВКИ ГРАФИКА
+        // При смене блока заполняем таблицы, очищаем графики и чекбоксы
+        private void ChooseBlockCalculationsAndGraphsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillCoordinatesAndEstimationTable();
+            clearCheckBoxes();
+            clearCharts();
+        }
+
+        private void clearCharts()
+        {
+            chartService.ClearChart(MChart);
+            chartService.ClearChart(AlphaChart);
+            chartService.ClearChart(ResponseFunctionChart);
+        }
+
+        private void clearCheckBoxes()
+        {
+            clearGroupBoxCheckBoxes(MChartGroupBox);
+            clearGroupBoxCheckBoxes(AlphaChartGroupBox);
+            clearGroupBoxCheckBoxes(ResponseFunctionGroupBox);
+        }
+
+        private void MChartClearButton_Click(object sender, EventArgs e)
+        {
+            clearGroupBoxCheckBoxes(MChartGroupBox);
+            chartService.ClearChart(MChart);
+        }
+
+        private void AlphaChartClearButton_Click(object sender, EventArgs e)
+        {
+            clearGroupBoxCheckBoxes(AlphaChartGroupBox);
+            chartService.ClearChart(AlphaChart);
+        }
+
+        private void ResponseFunctionChartClearButton_Click(object sender, EventArgs e)
+        {
+            clearGroupBoxCheckBoxes(ResponseFunctionGroupBox);
+            chartService.ClearChart(ResponseFunctionChart);
+        }
+
+        private void clearGroupBoxCheckBoxes(GroupBox groupBox)
+        {
+            foreach (CheckBox c in groupBox.Controls.OfType<CheckBox>())
+            {
+                c.Checked = false;
+            }
+        }               
+
+        // МЕТОДЫ ДЛЯ ОТРИСОВКИ ГРАФИКОВ
         private void LowerBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "M-";
-            if (SecondLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -413,16 +467,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["lowerBoundMValues"],
-                    SecondLevelMChart);
+                    MChart);
             }
         }
 
         private void MCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "M";
-            if (SecondLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -430,16 +484,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["MValues"],
-                    SecondLevelMChart);
+                    MChart);
             }
         }
 
         private void UpperBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "M+";
-            if (SecondLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -447,16 +501,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["upperBoundMValues"],
-                    SecondLevelMChart);
+                    MChart);
             }
         }
 
         private void PredictedLowerBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз М-";
-            if (SecondLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -464,16 +518,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["predictedLowerBoundMValues"],
-                    SecondLevelMChart);
+                    MChart);
             }
         }
 
         private void PredictedMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз М";
-            if (SecondLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -481,16 +535,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedMValues"],
-                SecondLevelMChart);
+                MChart);
             }
         }
 
         private void PredictedUpperBoundMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз М+";
-            if (SecondLevelMChart.Series.IndexOf(serieName) != -1)
+            if (MChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelMChart, serieName);
+                chartService.RemoveLine(MChart, serieName);
             }
             else
             {
@@ -498,16 +552,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                     serieName,
                     calculatedAlphaAndMValues["Epoches"],
                     calculatedAlphaAndMValues["predictedUpperBoundMValues"],
-                    SecondLevelMChart);
+                    MChart);
             }
         }
 
         private void LowerBoundAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Альфа-";
-            if (SecondLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -515,16 +569,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["lowerBoundAlphaValues"],
-                SecondLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void AlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Альфа";
-            if (SecondLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -532,16 +586,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["alphaValues"],
-                SecondLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void UpperBoundAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Альфа+";
-            if (SecondLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -549,16 +603,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["upperBoundAlphaValues"],
-                SecondLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void PredictedLowerBoundAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Альфа-";
-            if (SecondLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -566,16 +620,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedLowerBoundAlphaValues"],
-                SecondLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void PredictedAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Альфа";
-            if (SecondLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -583,16 +637,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedAlphaValues"],
-                SecondLevelAlphaChart);
+                AlphaChart);
             }
         }
 
         private void PredictedUpperAlphaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Альфа+";
-            if (SecondLevelAlphaChart.Series.IndexOf(serieName) != -1)
+            if (AlphaChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelAlphaChart, serieName);
+                chartService.RemoveLine(AlphaChart, serieName);
             }
             else
             {
@@ -600,17 +654,17 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["Epoches"],
                 calculatedAlphaAndMValues["predictedUpperBoundAlphaValues"],
-                SecondLevelAlphaChart);
+                AlphaChart);
             }
         }
 
-        // МЕТОДЫ ДЛЯ ГРАФИКА ПРОГНОЗНОЙ ФУНКЦИИ
+        // МЕТОДЫ ДЛЯ ГРАФИКОВ ФУНКЦИИ ОТКЛИКА
         private void LowerBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Функция отклика-";
-            if (SecondLevelResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelResponseFunctionChart, serieName);
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
             }
             else
             {
@@ -618,16 +672,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["lowerBoundMValues"],
                 calculatedAlphaAndMValues["lowerBoundAlphaValues"],
-                SecondLevelResponseFunctionChart);
+                ResponseFunctionChart);
             }
         }
 
         private void PredictedLowerBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Функция отклика-";
-            if (SecondLevelResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelResponseFunctionChart, serieName);
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
             }
             else
             {
@@ -635,16 +689,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["predictedLowerBoundMValues"],
                 calculatedAlphaAndMValues["predictedLowerBoundAlphaValues"],
-                SecondLevelResponseFunctionChart);
+                ResponseFunctionChart);
             }
         }
 
         private void ResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Функция отклика";
-            if (SecondLevelResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelResponseFunctionChart, serieName);
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
             }
             else
             {
@@ -652,16 +706,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["MValues"],
                 calculatedAlphaAndMValues["alphaValues"],
-                SecondLevelResponseFunctionChart);
+                ResponseFunctionChart);
             }
         }
 
         private void PredictedResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Функция отклика";
-            if (SecondLevelResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelResponseFunctionChart, serieName);
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
             }
             else
             {
@@ -669,16 +723,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["predictedMValues"],
                 calculatedAlphaAndMValues["predictedAlphaValues"],
-                SecondLevelResponseFunctionChart);
+                ResponseFunctionChart);
             }
         }
 
         private void UpperBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Функция отклика+";
-            if (SecondLevelResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelResponseFunctionChart, serieName);
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
             }
             else
             {
@@ -686,16 +740,16 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["upperBoundMValues"],
                 calculatedAlphaAndMValues["upperBoundAlphaValues"],
-                SecondLevelResponseFunctionChart);
+                ResponseFunctionChart);
             }
         }
 
         private void PredictedUpperBoundResponseFunction_CheckedChanged(object sender, EventArgs e)
         {
             string serieName = "Прогноз Функция отклика+";
-            if (SecondLevelResponseFunctionChart.Series.IndexOf(serieName) != -1)
+            if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
             {
-                chartService.RemoveLine(SecondLevelResponseFunctionChart, serieName);
+                chartService.RemoveLine(ResponseFunctionChart, serieName);
             }
             else
             {
@@ -703,9 +757,10 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
                 serieName,
                 calculatedAlphaAndMValues["predictedUpperBoundMValues"],
                 calculatedAlphaAndMValues["predictedUpperBoundAlphaValues"],
-                SecondLevelResponseFunctionChart);
+                ResponseFunctionChart);
             }
         }
+                
 
         private void label4_Click(object sender, EventArgs e)
         {
@@ -715,13 +770,7 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
         private void ObjectPictureBox_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void ChooseBlockCalculationsAndGraphsComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fillCoordinatesAndEstimationTable();
-            // clearGraph();
-        }
+        }        
 
         private void SecondLevelEstimationDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -737,5 +786,6 @@ namespace CourseWork.View.Forms.Decomposition.SecondLevel
         {
 
         }
+
     }
 }

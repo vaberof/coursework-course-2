@@ -30,61 +30,70 @@
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            this.FourthLevelCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.FourthLevelResponseFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.FourthLevelClearButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.FourthLevelResponseFunctionChart)).BeginInit();
+            this.MarksCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.ResponseFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ClearCheckedListBoxAndChartButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.ResponseFunctionChart)).BeginInit();
             this.SuspendLayout();
             // 
-            // FourthLevelCheckedListBox
+            // MarksCheckedListBox
             // 
-            this.FourthLevelCheckedListBox.FormattingEnabled = true;
-            this.FourthLevelCheckedListBox.Location = new System.Drawing.Point(12, 12);
-            this.FourthLevelCheckedListBox.Name = "FourthLevelCheckedListBox";
-            this.FourthLevelCheckedListBox.Size = new System.Drawing.Size(247, 667);
-            this.FourthLevelCheckedListBox.TabIndex = 0;
+            this.MarksCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.MarksCheckedListBox.FormattingEnabled = true;
+            this.MarksCheckedListBox.Location = new System.Drawing.Point(12, 12);
+            this.MarksCheckedListBox.Name = "MarksCheckedListBox";
+            this.MarksCheckedListBox.Size = new System.Drawing.Size(247, 650);
+            this.MarksCheckedListBox.TabIndex = 0;
+            this.MarksCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.MarksCheckedListBox_ItemCheck);
             // 
-            // FourthLevelResponseFunctionChart
+            // ResponseFunctionChart
             // 
+            this.ResponseFunctionChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             chartArea1.Name = "ChartArea1";
-            this.FourthLevelResponseFunctionChart.ChartAreas.Add(chartArea1);
+            this.ResponseFunctionChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.FourthLevelResponseFunctionChart.Legends.Add(legend1);
-            this.FourthLevelResponseFunctionChart.Location = new System.Drawing.Point(305, 12);
-            this.FourthLevelResponseFunctionChart.Name = "FourthLevelResponseFunctionChart";
-            this.FourthLevelResponseFunctionChart.Size = new System.Drawing.Size(1100, 668);
-            this.FourthLevelResponseFunctionChart.TabIndex = 1;
-            this.FourthLevelResponseFunctionChart.Text = "chart1";
+            this.ResponseFunctionChart.Legends.Add(legend1);
+            this.ResponseFunctionChart.Location = new System.Drawing.Point(305, 12);
+            this.ResponseFunctionChart.Name = "ResponseFunctionChart";
+            this.ResponseFunctionChart.Size = new System.Drawing.Size(1100, 745);
+            this.ResponseFunctionChart.TabIndex = 1;
+            this.ResponseFunctionChart.Text = "chart1";
             // 
-            // FourthLevelClearButton
+            // ClearCheckedListBoxAndChartButton
             // 
-            this.FourthLevelClearButton.Location = new System.Drawing.Point(12, 696);
-            this.FourthLevelClearButton.Name = "FourthLevelClearButton";
-            this.FourthLevelClearButton.Size = new System.Drawing.Size(247, 61);
-            this.FourthLevelClearButton.TabIndex = 2;
-            this.FourthLevelClearButton.Text = "Очистить";
-            this.FourthLevelClearButton.UseVisualStyleBackColor = true;
+            this.ClearCheckedListBoxAndChartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ClearCheckedListBoxAndChartButton.Location = new System.Drawing.Point(12, 696);
+            this.ClearCheckedListBoxAndChartButton.Name = "ClearCheckedListBoxAndChartButton";
+            this.ClearCheckedListBoxAndChartButton.Size = new System.Drawing.Size(247, 61);
+            this.ClearCheckedListBoxAndChartButton.TabIndex = 2;
+            this.ClearCheckedListBoxAndChartButton.Text = "Очистить";
+            this.ClearCheckedListBoxAndChartButton.UseVisualStyleBackColor = true;
+            this.ClearCheckedListBoxAndChartButton.Click += new System.EventHandler(this.ClearCheckedListBoxAndChartButton_Click);
             // 
             // FourthLevelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1417, 769);
-            this.Controls.Add(this.FourthLevelClearButton);
-            this.Controls.Add(this.FourthLevelResponseFunctionChart);
-            this.Controls.Add(this.FourthLevelCheckedListBox);
+            this.Controls.Add(this.ClearCheckedListBoxAndChartButton);
+            this.Controls.Add(this.ResponseFunctionChart);
+            this.Controls.Add(this.MarksCheckedListBox);
             this.Name = "FourthLevelForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FourthLevelForm";
             this.Load += new System.EventHandler(this.FourthLevelForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.FourthLevelResponseFunctionChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ResponseFunctionChart)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.CheckedListBox FourthLevelCheckedListBox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart FourthLevelResponseFunctionChart;
-        private System.Windows.Forms.Button FourthLevelClearButton;
+        private System.Windows.Forms.CheckedListBox MarksCheckedListBox;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ResponseFunctionChart;
+        private System.Windows.Forms.Button ClearCheckedListBoxAndChartButton;
     }
 }

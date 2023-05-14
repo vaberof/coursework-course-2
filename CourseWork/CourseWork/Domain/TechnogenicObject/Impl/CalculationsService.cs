@@ -81,37 +81,9 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
         }
 
         // TODO: переименовать MValues -> vectorsMValues
-        public List<double> CalculateMValuesWithMarks(DataGridView elevatorTable, List<string> marks)
+        public List<double> CalculateMValuesWithMarks(DataGridView dataGridTable, List<string> marks)
         {
-            Double M = 0;
-
-            List<Double> values = new List<Double>();
-
-            List<Double> listOfMValues = new List<Double>();
-
-            for (int i = 0; i < elevatorTable.RowCount - 1; i++)
-            {
-                foreach (DataGridViewColumn col in elevatorTable.Columns)
-                {
-                    if (marks.Contains(col.Name))
-                    {
-                        values.Add(Convert.ToDouble(elevatorTable.Rows[i].Cells[col.Name].Value));
-
-                    }
-
-                }
-                foreach (double c in values)
-                {
-                    M += (c * c);
-                }
-                listOfMValues.Add(Math.Sqrt(M));
-                M = 0;
-                values.Clear();
-
-            }
-            return listOfMValues;
-
-            /*List<double> MValues = new List<double>();
+            List<double> MValues = new List<double>();
 
             for (int i = 0; i < dataGridTable.RowCount - 1; i++)
             {
@@ -126,7 +98,7 @@ namespace CourseWork.Domain.TechnogenicObject.Impl
                 }
                 MValues.Add(Math.Sqrt(MSquareSum));
             }
-            return MValues;*/
+            return MValues;
         }
 
         public List<double> CalculateAlphaValuesWithMarks(DataGridView dataGridTable, List<double> MValues, List<string> marks)

@@ -42,6 +42,7 @@
             this.DecompositionToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.FirstLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SecondLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FourthLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTable = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -51,7 +52,6 @@
             this.EpsilonLabel = new System.Windows.Forms.Label();
             this.AlphaLabel = new System.Windows.Forms.Label();
             this.ObjectDesciptionLabel = new System.Windows.Forms.Label();
-            this.FourthLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenuToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ObjectPictureBox)).BeginInit();
@@ -89,21 +89,21 @@
             // 
             this.OpenProjectToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.OpenProjectToolStripMenuItem.Name = "OpenProjectToolStripMenuItem";
-            this.OpenProjectToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.OpenProjectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.OpenProjectToolStripMenuItem.Text = "Открыть";
             this.OpenProjectToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectToolStripMenuItem_Click);
             // 
             // SaveProjectToolStripMenuItem
             // 
             this.SaveProjectToolStripMenuItem.Name = "SaveProjectToolStripMenuItem";
-            this.SaveProjectToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.SaveProjectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.SaveProjectToolStripMenuItem.Text = "Сохранить";
             this.SaveProjectToolStripMenuItem.Click += new System.EventHandler(this.saveProjectToolStripMenuItem_Click);
             // 
             // SaveAsProjectToolStripMenuItem
             // 
             this.SaveAsProjectToolStripMenuItem.Name = "SaveAsProjectToolStripMenuItem";
-            this.SaveAsProjectToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.SaveAsProjectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.SaveAsProjectToolStripMenuItem.Text = "Сохранить как";
             // 
             // ObjectToolStripDropDownButton
@@ -166,16 +166,23 @@
             // FirstLevelToolStripMenuItem
             // 
             this.FirstLevelToolStripMenuItem.Name = "FirstLevelToolStripMenuItem";
-            this.FirstLevelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.FirstLevelToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
             this.FirstLevelToolStripMenuItem.Text = "1 уровень";
             this.FirstLevelToolStripMenuItem.Click += new System.EventHandler(this.FirstLevelToolStripMenuItem_Click);
             // 
             // SecondLevelToolStripMenuItem
             // 
             this.SecondLevelToolStripMenuItem.Name = "SecondLevelToolStripMenuItem";
-            this.SecondLevelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.SecondLevelToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
             this.SecondLevelToolStripMenuItem.Text = "2 уровень";
             this.SecondLevelToolStripMenuItem.Click += new System.EventHandler(this.SecondLevelToolStripMenuItem_Click);
+            // 
+            // FourthLevelToolStripMenuItem
+            // 
+            this.FourthLevelToolStripMenuItem.Name = "FourthLevelToolStripMenuItem";
+            this.FourthLevelToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.FourthLevelToolStripMenuItem.Text = "4 уровень";
+            this.FourthLevelToolStripMenuItem.Click += new System.EventHandler(this.FourthLevelToolStripMenuItem_Click);
             // 
             // dataGridViewTable
             // 
@@ -264,6 +271,9 @@
             // 
             // ObjectDesciptionLabel
             // 
+            this.ObjectDesciptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ObjectDesciptionLabel.AutoSize = true;
             this.ObjectDesciptionLabel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ObjectDesciptionLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -276,13 +286,6 @@
             this.ObjectDesciptionLabel.Text = "object description";
             this.ObjectDesciptionLabel.Visible = false;
             this.ObjectDesciptionLabel.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // FourthLevelToolStripMenuItem
-            // 
-            this.FourthLevelToolStripMenuItem.Name = "FourthLevelToolStripMenuItem";
-            this.FourthLevelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.FourthLevelToolStripMenuItem.Text = "4 уровень";
-            this.FourthLevelToolStripMenuItem.Click += new System.EventHandler(this.FourthLevelToolStripMenuItem_Click);
             // 
             // ApplicationForm
             // 

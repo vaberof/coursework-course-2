@@ -8,20 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using CourseWork.Service.Decomposition;
 
 namespace CourseWork.Service.Chart.Impl
 {
-    public class DecompositionService : IFirstLevelDecompositionService, ISecondLevelDecompositionService
+    public class DecompositionService : IFirstLevelDecompositionService, ISecondLevelDecompositionService, IFourthLevelDecompositionService
     {
         ICalculationsService calculationsService;
-        
+
         public DecompositionService(ICalculationsService calculationsService)
         {
             this.calculationsService = calculationsService;
         }
 
         public void CalculateValuesInCoordinatesTable(
-            ref List<List<double>>  calculatedValues, 
+            ref List<List<double>> calculatedValues,
             ref Dictionary<string, List<double>> calculatedAlphaAndMValues,
             DataGridView dataGridTable,
             DataTable dataTable,
@@ -239,14 +240,19 @@ namespace CourseWork.Service.Chart.Impl
             estimationTable.Columns[6].Name = "Состояние";
         }
 
-        public void FillMarksInCheckedListBox(List<string> marks, CheckedListBox checkedListBox)
+        public void FillMarksInCheckedListBox(int marksCount, CheckedListBox checkedListBox)
         {
-            for (int i = 0; i < marks.Count; i++)
+            for (int i = 1; i <= marksCount; i++)
             {
-                checkedListBox.Items.Add(marks[i]);
+                checkedListBox.Items.Add(i);
             }
         }
 
+        public List<double> getPredictedValues(List<double> marksValues, double alpha)
+        {
+            return calculationsService.GetPredictedValues(marksValues, alpha);
+        }
+       
         private void fillEstimationColumn(
             ref Dictionary<string, List<double>> calculatedAlphaAndMValues,
             DataGridView dataGridView)

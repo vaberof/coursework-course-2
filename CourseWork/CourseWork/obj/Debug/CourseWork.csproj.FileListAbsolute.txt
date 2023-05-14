@@ -36,3 +36,4 @@ C:\Users\vaber\source\repos\c#Labs\semester4\CourseWork\CourseWork\CourseWork\ob
 C:\Users\vaber\source\repos\c#Labs\semester4\CourseWork\CourseWork\CourseWork\obj\Debug\CourseWork.csproj.CopyComplete
 C:\Users\vaber\source\repos\c#Labs\semester4\CourseWork\CourseWork\CourseWork\obj\Debug\CourseWork.exe
 C:\Users\vaber\source\repos\c#Labs\semester4\CourseWork\CourseWork\CourseWork\obj\Debug\CourseWork.pdb
+C:\Users\vaber\source\repos\c#Labs\semester4\CourseWork\CourseWork\CourseWork\obj\Debug\CourseWork.View.Forms.Decomposition.FourthLevel.FourthLevelForm.resources

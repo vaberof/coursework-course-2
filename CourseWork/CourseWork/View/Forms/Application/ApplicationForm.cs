@@ -174,7 +174,7 @@ namespace CourseWork
 
         private void ObjectDescriptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(ObjectDesciptionLabel.Text);
+            MessageBox.Show(ObjectDesciptionLabel.Text, "Описание объекта");
         }
 
         private void saveProjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -328,7 +328,12 @@ namespace CourseWork
 
         private void FourthLevelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FourthLevelForm fourthLevelForm = new FourthLevelForm();
+            FourthLevelForm fourthLevelForm = new FourthLevelForm(
+                decompositionService,
+                chartService,
+                technogenicObject.GeodeticMarksCount,
+                Convert.ToDouble(AlphaTextBox.Text),
+                dataGridViewTable);
 
             fourthLevelForm.Show();
         }

@@ -25,6 +25,7 @@ namespace CourseWork.Domain.TechnogenicObject
 
         // TODO: переименовать этот метод для заполнения конкретно таблицы со значениями
         // и основную таблицу тоже переименовать из dataGridTable -> во что-нбиудь получше
+        // phaseCoordinatesTable
         public void FillDataGridTable(DataGridView dataGridTable)
         {
             this.dataTable = new DataTable();
@@ -90,6 +91,7 @@ namespace CourseWork.Domain.TechnogenicObject
             technogenicObjectStorage.UpdateEpochCount(epochCount);
         }
 
+        // TODO: проверять, что Количество эпох - selectedRowsIndexes.Count > 0 (должна быть хотя бы 1 эпоха)
         public void DeleteEpoches(DataGridView dataGridTable, List<int> selectedRowsIndexes)
         {
             List<int> epochValues = new List<int>();
