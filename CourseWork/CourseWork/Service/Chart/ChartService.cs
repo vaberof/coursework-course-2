@@ -67,9 +67,10 @@ namespace CourseWork.Service.Chart
 
         public void ClearChart(System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
-            foreach (var series in chart.Series)
+            for (int i = 0; i < chart.Series.Count; i++)
             {
-                series.Points.Clear();
+                chart.Series[i].Points.Clear();
+                chart.Series.RemoveAt(i);
             }
 
             chart.Series.Clear();

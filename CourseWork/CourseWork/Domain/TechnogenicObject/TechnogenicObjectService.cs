@@ -1,6 +1,9 @@
-﻿using System;
+﻿using CourseWork.Handlers.Application.ToolStrip.Project;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,8 +35,7 @@ namespace CourseWork.Domain.TechnogenicObject
             mainCoordinatesTable.Columns.Clear();
             mainCoordinatesTable.Rows.Clear();
 
-            // count - 1 потому что послендяя колонка "Количество эпох"
-            for (int column = 0; column < dataTable.Columns.Count - 1; column++)
+            for (int column = 0; column < dataTable.Columns.Count; column++)
             {
                 string columnName = dataTable.Columns[column].ColumnName;
 
@@ -57,12 +59,12 @@ namespace CourseWork.Domain.TechnogenicObject
 
             int newRowIndex = mainCoordinatesTable.RowCount - 1;
 
-            int nextEpochValue = technogenicObjectStorage.GetEpochCount();
+            int nextEpochValue = technogenicObjectStorage.GetNextEpochValue();
 
             mainCoordinatesTable.Rows[newRowIndex].Cells[0].Value = nextEpochValue;
 
             technogenicObjectStorage.AddRow(nextEpochValue);
-            technogenicObjectStorage.UpdateEpochCount(nextEpochValue + 1);
+            technogenicObjectStorage.UpdateNextEpochValue(nextEpochValue + 1);
 
             for (int i = 1; i < mainCoordinatesTable.Columns.Count; i++)
             {
@@ -114,6 +116,52 @@ namespace CourseWork.Domain.TechnogenicObject
             technogenicObjectStorage.DeleteRowFromTable(epochValues);
 
             currentEpochCount -= selectedRowsIndexes.Count;
-        }       
+        }
+
+        public void CreateTechnogenicObjectValuesTable(double alpha, double epsilon, string pngFilePath, int nextEpochValue)
+        {
+            byte[] convertedImage = convertImageToBytes(pngFilePath);
+
+            technogenicObjectStorage.CreateTechnogenicObjectValuesTable(alpha, epsilon, convertedImage, nextEpochValue);
+        }
+
+        public void GetTechnogenicObjectValues(ref double alpha, ref double epsilon, ref Image image, ref int nextEpochCount)
+        {
+            byte[] imageBytes = null;
+
+            technogenicObjectStorage.GetTechnogenicObjectValues(ref alpha, ref epsilon, ref imageBytes, ref nextEpochCount);
+
+            image = convertBytesToImage(imageBytes);
+        }
+
+        public void UpdateAlphaAndEpsilon(double alpha, double epsilon)
+        {
+            technogenicObjectStorage.UpdateAlphaAndEpsilon(alpha, epsilon);
+        }
+
+        public void GetTechnogenicObjectImage()
+        {
+            // byte[] image = technogenicObjectStorage.GetTechnogenicObjectImage();
+            // return convertBytesToImage(image);
+        }
+
+        private byte[] convertImageToBytes(string pngFilePath)
+        {
+            Image img = Image.FromFile(pngFilePath);
+            byte[] bytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                bytes = ms.ToArray();
+            }
+            return bytes;
+        }
+        private Image convertBytesToImage(byte[] imageBytes)
+        {
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = new Bitmap(ms);
+            return image;
+        }
     }
 }

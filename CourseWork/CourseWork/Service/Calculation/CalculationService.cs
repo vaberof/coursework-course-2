@@ -266,7 +266,7 @@ namespace CourseWork.Service.Calculation
             DataGridView dataGridView = new DataGridView();
 
             // TODO: count - 1 потому что послендяя колонка "количество эпох"
-            for (int column = 0; column < dataTable.Columns.Count - 1; column++)
+            for (int column = 0; column < dataTable.Columns.Count; column++)
             {
                 string ColName = dataTable.Columns[column].ColumnName;
                 dataGridView.Columns.Add(ColName, ColName);

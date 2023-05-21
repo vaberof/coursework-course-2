@@ -57,21 +57,51 @@ namespace CourseWork.View.Forms.Decomposition.FourthLevel
                 }
                 else
                 {
-                    addXYLine(MarksCheckedListBox.SelectedItem.ToString());
+                    addXYLine(serieName);
+                }
+            }
+        }
+
+        private void DisplayAllCheckedListBoxAndChartButton_Click(object sender, EventArgs e)
+        {
+            clearCheckedListBoxAndChart();
+
+            for (int i = 0; i < MarksCheckedListBox.Items.Count; i++)
+            {
+                MarksCheckedListBox.SetItemChecked(i, true);
+
+                string serieName = MarksCheckedListBox.Items[i].ToString();
+
+                if (ResponseFunctionChart.Series.IndexOf(serieName) == -1)
+                {
+                    addXYLine(serieName);
                 }
             }
         }
 
         private void ClearCheckedListBoxAndChartButton_Click(object sender, EventArgs e)
         {
+            clearCheckedListBoxAndChart();
+        }
+
+        private void clearCheckedListBoxAndChart()
+        {
             for (int i = 0; i < MarksCheckedListBox.Items.Count; i++)
             {
                 MarksCheckedListBox.SetItemChecked(i, false);
+
+                string serieName = MarksCheckedListBox.Items[i].ToString();
+
+                if (ResponseFunctionChart.Series.IndexOf(serieName) != -1)
+                {
+                    removeXYLine(serieName);
+                }
             }
 
             chartService.ClearChart(ResponseFunctionChart);
         }
 
+        // TODO: рассчитать нужные значения заранее
         private void addXYLine(string mark)
         {
             List<double> epochs = getEpochs();

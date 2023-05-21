@@ -12,9 +12,11 @@ namespace CourseWork.Domain.TechnogenicObject
     {
         void OpenConnection();
         void CloseConnection();
-        void CreateEpochCountColumn();
-        void UpdateEpochCount(int epochCount);
-        int GetEpochCount();
+        void CreateTechnogenicObjectValuesTable(double alpha, double epsilon, byte[] image, int nextEpochValue);
+        void GetTechnogenicObjectValues(ref double alpha, ref double epsilon, ref byte[] imageBytes, ref int nextEpochValue);
+        void UpdateAlphaAndEpsilon(double alpha, double epsilon); 
+        void UpdateNextEpochValue(int epochCount);
+        int GetNextEpochValue();
         void FillDataTable(DataTable table);
         void AddRow(double value);
         void AddValuesInRow(int column, int row, double value);

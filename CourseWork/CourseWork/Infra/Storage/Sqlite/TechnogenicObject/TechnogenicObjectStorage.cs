@@ -11,11 +11,15 @@ using System.Windows.Forms;
 using CourseWork.Domain.TechnogenicObject;
 using System.Runtime.InteropServices;
 using System.Windows.Documents;
+using System.Xml.Linq;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
 {
     internal class TechnogenicObjectStorage : ITechogenicObjectStorage
     {
+        const string technogenicObjectValuesTable = "technogenic_object_values";
+
         private Sqlite db;
 
         public TechnogenicObjectStorage(Sqlite db)
@@ -25,56 +29,34 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
 
         public void OpenConnection()
         {
-            db.connection.Open();
+            db.Connection.Open();
         }
 
         public void CloseConnection()
         {
-            db.connection.Close();
+            db.Connection.Close();
         }
 
-        public void CreateEpochCountColumn()
+        public void UpdateNextEpochValue(int nextEpochValue)
         {
-            using (var command = new SQLiteCommand("PRAGMA table_info(Данные)", db.connection))
+            using (var command = new SQLiteCommand($"UPDATE {technogenicObjectValuesTable} SET next_epoch_value = @nextEpochValue", db.Connection))
             {
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        if (reader.GetString(1) == "Количество_эпох")
-                        {
-                            return;
-                        }
-                    }
-                }
-            }
-            
-            using (var command = new SQLiteCommand("ALTER TABLE Данные ADD COLUMN Количество_эпох INTEGER;", db.connection))
-            {
+                command.Parameters.AddWithValue("@nextEpochValue", nextEpochValue);
                 command.ExecuteNonQuery();
             }
         }
 
-        public void UpdateEpochCount(int epochCount)
-        {
-            using (var command = new SQLiteCommand("UPDATE Данные SET Количество_эпох = @epochCount", db.connection))
-            {
-                command.Parameters.AddWithValue("@epochCount", epochCount);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public int GetEpochCount()
+        public int GetNextEpochValue()
         {
             int epochCount = 0;
             
-            using (var command = new SQLiteCommand("SELECT Количество_эпох FROM Данные", db.connection))
+            using (var command = new SQLiteCommand($"SELECT next_epoch_value FROM {technogenicObjectValuesTable}", db.Connection))
             {
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        epochCount = Convert.ToInt32(reader["Количество_эпох"]);
+                        epochCount = Convert.ToInt32(reader["next_epoch_value"]);
                     }
                 }
             }            
@@ -82,20 +64,75 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
             return epochCount;
         }
 
+        public void CreateTechnogenicObjectValuesTable(double alpha, double epsilon, byte[] image, int nextEpochValue)
+        {
+            SQLiteCommand command = new SQLiteCommand(db.Connection);            
+            command.CommandText = $"CREATE TABLE IF NOT EXISTS {technogenicObjectValuesTable} " +
+                $"(Alpha REAL, Epsilon REAL, Image BLOB, next_epoch_value INTEGER)";
+            command.ExecuteNonQuery();
+
+            int rowsCount = getRowsCountInTable(technogenicObjectValuesTable);
+            //MessageBox.Show("rowsCount: " +  rowsCount.ToString());
+
+            if (rowsCount == 0)
+            { 
+                command.CommandText = $"INSERT INTO {technogenicObjectValuesTable} " +
+                    $"(alpha, epsilon, image, next_epoch_value) VALUES (@alpha, @epsilon, @image, @nextEpochValue)";
+                
+                command.Parameters.AddWithValue("@alpha", alpha);
+                command.Parameters.AddWithValue("@epsilon", epsilon);
+                command.Parameters.AddWithValue("@image", image);
+                command.Parameters.AddWithValue("@nextEpochValue", nextEpochValue);
+
+                command.ExecuteNonQuery();
+            }            
+        }
+
+        public void GetTechnogenicObjectValues(ref double alpha, ref double epsilon, ref byte[] imageBytes, ref int nextEpochValue) 
+        {
+            string getTechnogenicObjectValuesQuery = $"SELECT alpha, epsilon, image, next_epoch_value FROM {technogenicObjectValuesTable}";
+
+            SQLiteCommand command = new SQLiteCommand(getTechnogenicObjectValuesQuery, db.Connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                alpha = reader.GetDouble(0);
+                epsilon = reader.GetDouble(1);
+                imageBytes = (byte[])reader[2];
+                nextEpochValue = reader.GetInt32(3);
+            }
+            reader.Close();
+        }
+
+        public void UpdateAlphaAndEpsilon(double alpha, double epsilon)
+        {
+            string updateAlphaAndEpsilonQuery = $"UPDATE {technogenicObjectValuesTable} SET alpha = @alpha, epsilon = @epsilon";
+
+            using (SQLiteCommand command = new SQLiteCommand(updateAlphaAndEpsilonQuery, db.Connection))
+            {
+                command.Parameters.AddWithValue("@alpha", alpha);
+                command.Parameters.AddWithValue("@epsilon", epsilon);
+
+                command.ExecuteNonQuery();
+            }
+        }        
+
         public void FillDataTable(DataTable dataTable)
         {
-            string query = "SELECT * FROM [" + getTableName() + "]";
+            string getAllQuery = "SELECT * FROM [" + getTableName() + "]";
 
             dataTable.Rows.Clear();
             dataTable.Columns.Clear();
 
-            SQLiteCommand command = new SQLiteCommand(db.connection);
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, db.connection);
+            SQLiteCommand command = new SQLiteCommand(db.Connection);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(getAllQuery, db.Connection);
 
             adapter.Fill(dataTable);
 
             // count - 1 потому что послендяя колонка "количество эпох"
-            for (int i = 1; i < dataTable.Columns.Count - 1; i++)
+            for (int i = 1; i < dataTable.Columns.Count; i++)
             {
                 string replaceCommosToDots = "UPDATE [" + getTableName() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";
                 command.CommandText = replaceCommosToDots;
@@ -106,15 +143,15 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
             dataTable.Rows.Clear();
             dataTable.Columns.Clear();
 
-            adapter = new SQLiteDataAdapter(query, db.connection);
+            adapter = new SQLiteDataAdapter(getAllQuery, db.Connection);
             adapter.Fill(dataTable);            
         }
 
         public void AddRow(double value)
         {
-            string SQLQuery = "INSERT INTO [" + getTableName() + "] (Эпоха) VALUES (\"" + value + "\")";
-            SQLiteCommand command = new SQLiteCommand(db.connection);
-            command.CommandText = SQLQuery;
+            string addNewEpochQuery = "INSERT INTO [" + getTableName() + "] (Эпоха) VALUES (\"" + value + "\")";
+            SQLiteCommand command = new SQLiteCommand(db.Connection);
+            command.CommandText = addNewEpochQuery;
             command.ExecuteNonQuery();
         }
 
@@ -122,9 +159,9 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
         {            
             string convertedValue = value.ToString().Replace(',', '.');
 
-            string SQLQuery = "UPDATE [" + getTableName() + "] SET \"" + column + "\" = \"" + convertedValue + "\" WHERE Эпоха = \'" + row + "\'";
-            SQLiteCommand command = new SQLiteCommand(db.connection);
-            command.CommandText = SQLQuery;
+            string UpdateEpochValuesQuery = "UPDATE [" + getTableName() + "] SET \"" + column + "\" = \"" + convertedValue + "\" WHERE Эпоха = \'" + row + "\'";
+            SQLiteCommand command = new SQLiteCommand(db.Connection);
+            command.CommandText = UpdateEpochValuesQuery;
             command.ExecuteNonQuery();
         }
 
@@ -141,17 +178,34 @@ namespace CourseWork.Infra.Storage.Sqlite.TechnogenicObject
                 }
             }
             
-            string SQLQuery = "DELETE FROM [" + getTableName() + "] WHERE Эпоха IN " + "(" + convertedEpochs + ")";
-            SQLiteCommand command = new SQLiteCommand(db.connection);
-            command.CommandText = SQLQuery;
+            string deleteEpochValuesQuery = "DELETE FROM [" + getTableName() + "] WHERE Эпоха IN " + "(" + convertedEpochs + ")";
+            SQLiteCommand command = new SQLiteCommand(db.Connection);
+            command.CommandText = deleteEpochValuesQuery;
             command.ExecuteNonQuery();
+        }
+
+        private int getRowsCountInTable(string tableName)
+        {
+            object rowCount;
+
+            using (SQLiteCommand command = new SQLiteCommand($"SELECT COUNT(*) FROM {tableName}", db.Connection))
+            {
+                rowCount = command.ExecuteScalar();
+            }
+
+            if (rowCount == null)
+            {
+                return 0;
+            }
+
+            return Convert.ToInt32(rowCount);
         }
 
         private string getTableName()
         {
             string query = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
 
-            SQLiteCommand command = new SQLiteCommand(query, db.connection);
+            SQLiteCommand command = new SQLiteCommand(query, db.Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             string tableName = "";
 

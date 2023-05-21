@@ -198,19 +198,19 @@ namespace CourseWork.Service.Decomposition
             coordinatesTable.Columns[0].Name = "Эпоха";
 
             coordinatesTable.Columns[1].Name = "М";
-            coordinatesTable.Columns[2].Name = "Альфа";
+            coordinatesTable.Columns[2].Name = "Альфа°";
             coordinatesTable.Columns[3].Name = "Прогноз M";
-            coordinatesTable.Columns[4].Name = "Прогноз Альфа";
+            coordinatesTable.Columns[4].Name = "Прогноз Альфа°";
 
             coordinatesTable.Columns[5].Name = "М+";
-            coordinatesTable.Columns[6].Name = "Альфа+";
+            coordinatesTable.Columns[6].Name = "Альфа+°";
             coordinatesTable.Columns[7].Name = "Прогноз M+";
-            coordinatesTable.Columns[8].Name = "Прогноз Альфа+";
+            coordinatesTable.Columns[8].Name = "Прогноз Альфа+°";
 
             coordinatesTable.Columns[9].Name = "М-";
-            coordinatesTable.Columns[10].Name = "Альфа-";
+            coordinatesTable.Columns[10].Name = "Альфа-°";
             coordinatesTable.Columns[11].Name = "Прогноз M-";
-            coordinatesTable.Columns[12].Name = "Прогноз Альфа-";
+            coordinatesTable.Columns[12].Name = "Прогноз Альфа°-";
         }
 
         public void CreateEstimationTableColumns(DataGridView estimationTable)

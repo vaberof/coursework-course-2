@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationForm));
             this.TopMenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.ProjectToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.OpenProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenArchiveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ObjectToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
@@ -40,7 +40,7 @@
             this.FirstLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SecondLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FourthLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridViewTable = new System.Windows.Forms.DataGridView();
+            this.MainCoordinatiesDataGridViewTable = new System.Windows.Forms.DataGridView();
             this.AddEpochButton = new System.Windows.Forms.Button();
             this.DeleteEpochButton = new System.Windows.Forms.Button();
             this.ObjectPictureBox = new System.Windows.Forms.PictureBox();
@@ -49,8 +49,9 @@
             this.EpsilonLabel = new System.Windows.Forms.Label();
             this.AlphaLabel = new System.Windows.Forms.Label();
             this.ObjectDesciptionLabel = new System.Windows.Forms.Label();
+            this.OpenFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenuToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainCoordinatiesDataGridViewTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ObjectPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,7 +73,8 @@
             this.ProjectToolStripDropDownButton.AutoToolTip = false;
             this.ProjectToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ProjectToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenProjectToolStripMenuItem,
+            this.OpenFolderToolStripMenuItem,
+            this.OpenArchiveProjectToolStripMenuItem,
             this.SaveProjectToolStripMenuItem,
             this.SaveAsProjectToolStripMenuItem});
             this.ProjectToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("ProjectToolStripDropDownButton.Image")));
@@ -81,25 +83,25 @@
             this.ProjectToolStripDropDownButton.Size = new System.Drawing.Size(73, 28);
             this.ProjectToolStripDropDownButton.Text = "Проект";
             // 
-            // OpenProjectToolStripMenuItem
+            // OpenArchiveProjectToolStripMenuItem
             // 
-            this.OpenProjectToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.OpenProjectToolStripMenuItem.Name = "OpenProjectToolStripMenuItem";
-            this.OpenProjectToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
-            this.OpenProjectToolStripMenuItem.Text = "Открыть";
-            this.OpenProjectToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectToolStripMenuItem_Click);
+            this.OpenArchiveProjectToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.OpenArchiveProjectToolStripMenuItem.Name = "OpenArchiveProjectToolStripMenuItem";
+            this.OpenArchiveProjectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.OpenArchiveProjectToolStripMenuItem.Text = "Открыть архив";
+            this.OpenArchiveProjectToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectToolStripMenuItem_Click);
             // 
             // SaveProjectToolStripMenuItem
             // 
             this.SaveProjectToolStripMenuItem.Name = "SaveProjectToolStripMenuItem";
-            this.SaveProjectToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.SaveProjectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.SaveProjectToolStripMenuItem.Text = "Сохранить";
             this.SaveProjectToolStripMenuItem.Click += new System.EventHandler(this.saveProjectToolStripMenuItem_Click);
             // 
             // SaveAsProjectToolStripMenuItem
             // 
             this.SaveAsProjectToolStripMenuItem.Name = "SaveAsProjectToolStripMenuItem";
-            this.SaveAsProjectToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.SaveAsProjectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.SaveAsProjectToolStripMenuItem.Text = "Сохранить как";
             // 
             // ObjectToolStripDropDownButton
@@ -111,7 +113,7 @@
             this.ObjectToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("ObjectToolStripDropDownButton.Image")));
             this.ObjectToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ObjectToolStripDropDownButton.Name = "ObjectToolStripDropDownButton";
-            this.ObjectToolStripDropDownButton.Size = new System.Drawing.Size(73, 24);
+            this.ObjectToolStripDropDownButton.Size = new System.Drawing.Size(73, 28);
             this.ObjectToolStripDropDownButton.Text = "Объект";
             // 
             // ObjectShowDescriptionToolStripMenuItem
@@ -133,7 +135,7 @@
             this.DecompositionToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("DecompositionToolStripDropDownButton.Image")));
             this.DecompositionToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DecompositionToolStripDropDownButton.Name = "DecompositionToolStripDropDownButton";
-            this.DecompositionToolStripDropDownButton.Size = new System.Drawing.Size(128, 24);
+            this.DecompositionToolStripDropDownButton.Size = new System.Drawing.Size(128, 28);
             this.DecompositionToolStripDropDownButton.Text = "Декомпозиция";
             // 
             // FirstLevelToolStripMenuItem
@@ -157,17 +159,17 @@
             this.FourthLevelToolStripMenuItem.Text = "4 уровень";
             this.FourthLevelToolStripMenuItem.Click += new System.EventHandler(this.FourthLevelToolStripMenuItem_Click);
             // 
-            // dataGridViewTable
+            // MainCoordinatiesDataGridViewTable
             // 
-            this.dataGridViewTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.MainCoordinatiesDataGridViewTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewTable.Location = new System.Drawing.Point(0, 439);
-            this.dataGridViewTable.Name = "dataGridViewTable";
-            this.dataGridViewTable.RowHeadersWidth = 51;
-            this.dataGridViewTable.RowTemplate.Height = 24;
-            this.dataGridViewTable.Size = new System.Drawing.Size(1362, 334);
-            this.dataGridViewTable.TabIndex = 0;
+            this.MainCoordinatiesDataGridViewTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MainCoordinatiesDataGridViewTable.Location = new System.Drawing.Point(0, 439);
+            this.MainCoordinatiesDataGridViewTable.Name = "MainCoordinatiesDataGridViewTable";
+            this.MainCoordinatiesDataGridViewTable.RowHeadersWidth = 51;
+            this.MainCoordinatiesDataGridViewTable.RowTemplate.Height = 24;
+            this.MainCoordinatiesDataGridViewTable.Size = new System.Drawing.Size(1362, 334);
+            this.MainCoordinatiesDataGridViewTable.TabIndex = 0;
             // 
             // AddEpochButton
             // 
@@ -222,11 +224,11 @@
             // 
             this.EpsilonLabel.AutoSize = true;
             this.EpsilonLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.EpsilonLabel.Location = new System.Drawing.Point(206, 62);
+            this.EpsilonLabel.Location = new System.Drawing.Point(173, 62);
             this.EpsilonLabel.Name = "EpsilonLabel";
-            this.EpsilonLabel.Size = new System.Drawing.Size(69, 18);
+            this.EpsilonLabel.Size = new System.Drawing.Size(153, 18);
             this.EpsilonLabel.TabIndex = 7;
-            this.EpsilonLabel.Text = "Эпсилон";
+            this.EpsilonLabel.Text = "Точность измерения";
             // 
             // AlphaLabel
             // 
@@ -255,6 +257,12 @@
             this.ObjectDesciptionLabel.Text = "object description";
             this.ObjectDesciptionLabel.Visible = false;
             // 
+            // OpenFolderToolStripMenuItem
+            // 
+            this.OpenFolderToolStripMenuItem.Name = "OpenFolderToolStripMenuItem";
+            this.OpenFolderToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.OpenFolderToolStripMenuItem.Text = "Открыть папку";
+            // 
             // ApplicationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -268,7 +276,7 @@
             this.Controls.Add(this.ObjectPictureBox);
             this.Controls.Add(this.DeleteEpochButton);
             this.Controls.Add(this.AddEpochButton);
-            this.Controls.Add(this.dataGridViewTable);
+            this.Controls.Add(this.MainCoordinatiesDataGridViewTable);
             this.Controls.Add(this.TopMenuToolStrip);
             this.Name = "ApplicationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -277,7 +285,7 @@
             this.Load += new System.EventHandler(this.ApplicationForm_Load);
             this.TopMenuToolStrip.ResumeLayout(false);
             this.TopMenuToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainCoordinatiesDataGridViewTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ObjectPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -286,9 +294,9 @@
 
         #endregion
         private System.Windows.Forms.ToolStrip TopMenuToolStrip;
-        private System.Windows.Forms.DataGridView dataGridViewTable;
+        private System.Windows.Forms.DataGridView MainCoordinatiesDataGridViewTable;
         private System.Windows.Forms.ToolStripDropDownButton ProjectToolStripDropDownButton;
-        private System.Windows.Forms.ToolStripMenuItem OpenProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenArchiveProjectToolStripMenuItem;
         private System.Windows.Forms.Button AddEpochButton;
         private System.Windows.Forms.Button DeleteEpochButton;
         private System.Windows.Forms.PictureBox ObjectPictureBox;
@@ -305,6 +313,7 @@
         private System.Windows.Forms.ToolStripMenuItem FirstLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SecondLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FourthLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenFolderToolStripMenuItem;
     }
 }
 

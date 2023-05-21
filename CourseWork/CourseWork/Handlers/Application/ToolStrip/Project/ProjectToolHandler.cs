@@ -18,9 +18,9 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
 {
     public class ProjectToolHandler
     {
-        public string SqliteFilePath;
-        public string PngFilePath;
-        public string TxtFilePath;
+        public string SqliteFilePath { get; private set; }
+        public string PngFilePath { get; private set; }
+        public string TxtFilePath { get; private set; }
 
         // путь к архиву 
         private string path;
@@ -65,14 +65,8 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
             return getObjectDescriptionFromTxtFile(TxtFilePath);
         }
 
-        public void SaveArchive(string type)
+        public void SaveZipArchive()
         {
-            if (type == "rar")
-            {
-                saveRarArchive(pathToArchive, archiveName);
-                return;
-            }
-
             saveZipArchive(pathToArchive, archiveName);
         }       
 
@@ -102,23 +96,6 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
             SqliteFilePath = processDbFiles(dbFilesCount, path);
             PngFilePath =  processPngFiles(pngFilesCount, path);
             TxtFilePath =  processTxtFiles(txtFilesCount, path);
-        }
-
-        private void saveRarArchive(string path, string name)
-        {
-            MessageBox.Show("archiveName: " + archiveName);
-            try
-            {             
-                using (var archive = ZipArchive.Create())
-                {
-                    archive.AddAllFromDirectory(pathToArchive + "\\" + archiveName);
-                    archive.SaveTo(pathToArchive + "\\" + archiveName + ".rar", CompressionType.Rar);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Не удалось сохранить rar архив: " + ex.Message);
-            }
         }
 
         private void saveZipArchive(string path, string name)
@@ -177,7 +154,7 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
                 List<string> lines = File.ReadAllLines(filePath, Encoding.Unicode).ToList();
 
                 int taskOption = 0;
-                string type = "";
+                string technogeniceObjectType = "";
                 int structuralBlocksCount = 0;
                 int geodeticMarksCount = 0;
                 int measurementEpochsCount = 0;
@@ -185,56 +162,20 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
 
                 foreach (string line in lines)
                 {
-                    // парсим номер варианта
-                    if (line.StartsWith("Вариант"))
-                    {
-                        List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                       //MessageBox.Show(splittedLine[1]);
-                        taskOption = Convert.ToInt32(splittedLine[1]);
-                    }
+                    parseTaskOption(line, ref taskOption);
 
-                    // парсим тип техногенного объекта
-                    if (line.StartsWith("Тип"))
-                    {
-                        List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        //MessageBox.Show(splittedLine[1]);
-                        type = splittedLine[1];
-                    }
+                    parseTechnogenicObjectType(line, ref technogeniceObjectType);
 
-                    // парсим количество структурных блоков
-                    if (line.StartsWith("Количество структурных"))
-                    {
-                        List<string> splittedLine = line.Split(' ').ToList();
-                       //MessageBox.Show(splittedLine[3]);
-                        structuralBlocksCount = Convert.ToInt32(splittedLine[3]);
-                    }
+                    parseStructuralBlocksCount(line, ref structuralBlocksCount);
 
-                    // парсим количество геодезических марок
-                    if (line.StartsWith("Количество геодезических марок"))
-                    {
-                        List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        // MessageBox.Show(splittedLine[1]);
-                        geodeticMarksCount = Convert.ToInt32(splittedLine[1]);
-                    }
+                    parseGeodeticMarksCount(line, ref geodeticMarksCount);
 
-                    // парсим количество эпох измерений
-                    if (line.StartsWith("Количество эпох"))
-                    {
-                        List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        //MessageBox.Show(splittedLine[1].Split(' ')[1]);
-                        measurementEpochsCount = Convert.ToInt32(splittedLine[1].Split(' ')[1]);
-                    }
+                    parseMeasurementEpochsCount(line, ref measurementEpochsCount);
 
-                    // парсим точность измерений
-                    if (line.StartsWith("Точность"))
-                    {
-                        List<string> splittedLine = line.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        //MessageBox.Show(splittedLine[1].Remove(splittedLine[1].Length - 1));
-                        measurementAccuracy = Convert.ToDouble(splittedLine[1].Remove(splittedLine[1].Length - 1));
-                    }                   
+                    parseMeasurementAccuracy(line, ref measurementAccuracy);
                 }
 
-                return new TechnogenicObject(taskOption, type, structuralBlocksCount, geodeticMarksCount, measurementEpochsCount, measurementAccuracy);
+                return new TechnogenicObject(taskOption, technogeniceObjectType, structuralBlocksCount, geodeticMarksCount, measurementEpochsCount, measurementAccuracy);
             }
             catch(Exception ex)
             {
@@ -256,6 +197,66 @@ namespace CourseWork.Handlers.Application.ToolStrip.Project
             }
 
             return Path.GetFullPath(chooseFile.FileName);
+        }
+
+        private void parseTaskOption(string line, ref int taskOption)
+        {
+            if (line.StartsWith("Вариант"))
+            {
+                List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                //MessageBox.Show(splittedLine[1]);
+                taskOption = Convert.ToInt32(splittedLine[1]);
+            }
+        }
+
+        private void parseTechnogenicObjectType(string line, ref string technogeniceObjectType)
+        {
+            if (line.StartsWith("Тип"))
+            {
+                List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                //MessageBox.Show(splittedLine[1]);
+                technogeniceObjectType = splittedLine[1];
+            }
+        }
+
+        private void parseStructuralBlocksCount(string line, ref int structuralBlocksCount)
+        {
+            if (line.StartsWith("Количество структурных"))
+            {
+                List<string> splittedLine = line.Split(' ').ToList();
+                //MessageBox.Show(splittedLine[3]);
+                structuralBlocksCount = Convert.ToInt32(splittedLine[3]);
+            }
+        }
+
+        private void parseGeodeticMarksCount(string line, ref int geodeticMarksCount)
+        {
+            if (line.StartsWith("Количество геодезических марок"))
+            {
+                List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                // MessageBox.Show(splittedLine[1]);
+                geodeticMarksCount = Convert.ToInt32(splittedLine[1]);
+            }
+        }
+
+        private void parseMeasurementEpochsCount(string line, ref int measurementEpochsCount)
+        {
+            if (line.StartsWith("Количество эпох"))
+            {
+                List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                //MessageBox.Show(splittedLine[1].Split(' ')[1]);
+                measurementEpochsCount = Convert.ToInt32(splittedLine[1].Split(' ')[1]);
+            }
+        }
+
+        private void parseMeasurementAccuracy(string line, ref double measurementAccuracy)
+        {
+            if (line.StartsWith("Точность"))
+            {
+                List<string> splittedLine = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                //MessageBox.Show(splittedLine[1].Remove(splittedLine[1].Length - 1));
+                measurementAccuracy = Convert.ToDouble(splittedLine[1].Remove(splittedLine[1].Length - 1));
+            }
         }
     }
 
